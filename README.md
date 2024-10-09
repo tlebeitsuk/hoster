@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -34,3 +35,19 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+=======
+# hoster
+Platform var man kan skapa och använda resurser för sina appar. Ledorden är användarvändligt och anpassningsbart.
+
+## Teknik
+- Next.js
+- PostgreSQL
+- Tailwind
+- shadcn/ui
+- Incus (system container and virtual machine manager)
+
+## Förkunskaper
+- [Essential JavaScript for React](https://nextjs.org/learn/react-foundations/getting-started-with-react#essential-javascript-for-react)
+- [React Foundations](https://nextjs.org/learn/react-foundations)
+- [Learn Next.js](https://nextjs.org/learn/dashboard-app)
+>>>>>>> f62b38657d10a79fa8e084b8651b040ae907d7f2
