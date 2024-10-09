@@ -1,10 +1,11 @@
 # hoster
+Platform var man kan skapa och använda resurser för sina appar. Ledorden är användarvändligt och anpassningsbart.
 
+## Teknik
 - Next.js
 - PostgreSQL
 - Tailwind
 - shadcn/ui
-
 - Incus (system container and virtual machine manager)
 
 ## Förkunskaper
