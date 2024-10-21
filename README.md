@@ -15,16 +15,30 @@ Platform var man kan skapa och använda resurser för sina appar. Ledorden är a
 
 ## Getting Started
 
-First, run the development server:
+### Setup local postgresql database
+
+Install Docker Desktop and run the following command:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+docker-compose up -d
+```
+
+Update the `.env` file with the following:
+
+```bash
+DATABASE_URL=postgresql://postgres:password@localhost:5432/postgres
+```
+
+Then, install the dependencies:
+
+```bash
+pnpm install
+```
+
+Then, run the development server:
+
+```bash
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
