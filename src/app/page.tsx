@@ -2,6 +2,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth-client";
+import Link from "next/link";
 
 export default function Home() {
   const handleLogin = async () => {
@@ -18,6 +19,11 @@ export default function Home() {
           Login with GitHub
         </Button>
 
+        <Link href="/projects/new">
+          <Button >
+            Create new project
+          </Button>
+        </Link>
         <Image
           className="dark:invert"
           src="https://nextjs.org/icons/next.svg"
