@@ -24,6 +24,7 @@ export default function Home() {
             Create new project
           </Button>
         </Link>
+
         <Image
           className="dark:invert"
           src="https://nextjs.org/icons/next.svg"
