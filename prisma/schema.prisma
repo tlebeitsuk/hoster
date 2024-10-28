@@ -23,7 +23,7 @@ model User {
   updatedAt     DateTime
   Session       Session[]
   Account       Account[]
-
+  Project       Project[]
   @@map("user")
 }
 
@@ -60,4 +60,12 @@ model Verification {
   expiresAt  DateTime
 
   @@map("verification")
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  userId      String
+  user         User      @relation(fields: [userId], references: [id])
 }
