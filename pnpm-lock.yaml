@@ -59,6 +59,9 @@ importers:
       nextjs-toploader:
         specifier: ^3.7.15
         version: 3.7.15(next@14.2.16(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      ofetch:
+        specifier: ^1.4.1
+        version: 1.4.1
       react:
         specifier: ^18
         version: 18.3.1
@@ -74,6 +77,9 @@ importers:
       tailwindcss-animate:
         specifier: ^1.0.7
         version: 1.0.7(tailwindcss@3.4.13)
+      undici:
+        specifier: ^6.20.1
+        version: 6.20.1
     devDependencies:
       '@types/node':
         specifier: ^20
@@ -156,8 +162,8 @@ packages:
   '@floating-ui/core@1.6.8':
     resolution: {integrity: sha512-7XJ9cPU+yI2QeLS+FCSlqNFZJq8arvswefkZrYI1yQBbftw6FyrZOxYSh+9S7z7TpeWlRt9zJ5IhM1WIL334jA==}
 
-  '@floating-ui/dom@1.6.11':
-    resolution: {integrity: sha512-qkMCxSR24v2vGkhYDo/UzxfJN3D4syqSjyuTFz6C7XcpU1pASPRieNI0Kj5VP3/503mOfYiGY891ugBX1GlABQ==}
+  '@floating-ui/dom@1.6.12':
+    resolution: {integrity: sha512-NP83c0HjokcGVEMeoStg317VD9W7eDlGK7457dMBANbKA6GJZdc7rjujdgqzTaz93jkGgc5P/jeWbaCHnMNc+w==}
 
   '@floating-ui/react-dom@2.1.2':
     resolution: {integrity: sha512-06okr5cgPzMNBy+Ycse2A6udMi4bqwW/zgBF/rwjcNqWkyr82Mcg8b0vjX8OJpZFy/FKjJmw6wV7t44kK6kW7A==}
@@ -1275,6 +1281,9 @@ packages:
   defu@6.1.4:
     resolution: {integrity: sha512-mEQCMmwJu317oSz8CwdIOdwf3xMif1ttiM8LTufzc3g6kR+9Pe236twL8j3IYT1F7GfRgGcW6MWxzZjLIkuHIg==}
 
+  destr@2.0.3:
+    resolution: {integrity: sha512-2N3BOUU4gYMpTP24s5rF5iP7BDr7uNTCs4ozw3kf/eKfvWSIu93GEBi5m427YoyJoeOzQ5smuu4nNAPGb8idSQ==}
+
   detect-node-es@1.1.0:
     resolution: {integrity: sha512-ypdmJU/TbBby2Dxibuv7ZLW3Bs1QEmM7nHjEANfohJLvE0XVujisn1qPJcZxg+qDucsr+bP6fLD1rPS3AhJ7EQ==}
 
@@ -1932,6 +1941,9 @@ packages:
       react: '>= 16.0.0'
       react-dom: '>= 16.0.0'
 
+  node-fetch-native@1.6.4:
+    resolution: {integrity: sha512-IhOigYzAKHd244OC0JIMIUrjzctirCmPkaIfhDeGcEETWof5zKYUW7e7MYvChGWh/4CJeXEgsRyGzuF334rOOQ==}
+
   node-fetch@2.7.0:
     resolution: {integrity: sha512-c4FRfUm/dbcWZ7U+1Wq0AwCyFL+3nt2bEw05wfxSz+DWpWsitgmSgYmy2dQdWyKC1694ELPqMs/YzUSNozLt8A==}
     engines: {node: 4.x || >=6.0.0}
@@ -1987,6 +1999,9 @@ packages:
   object.values@1.2.0:
     resolution: {integrity: sha512-yBYjY9QX2hnRmZHAjG/f13MzmBzxzYgQhFrke06TTyKY5zSTEqkOeukBzIdVA3j3ulu8Qa3MbVFShV7T2RmGtQ==}
     engines: {node: '>= 0.4'}
+
+  ofetch@1.4.1:
+    resolution: {integrity: sha512-QZj2DfGplQAr2oj9KzceK9Hwz6Whxazmn85yYeVuS3u9XTMOGMRx0kO95MQ+vLsj/S/NwBDMMLU5hpxvI6Tklw==}
 
   once@1.4.0:
     resolution: {integrity: sha512-lNaJgI+2Q5URQBkccEKHTQOPaXdUxnZZElQTZY0MFUAuaEqe1E+Nyvgdz/aIyNi6Z9MzO5dv1H8n58/GELp3+w==}
@@ -2440,6 +2455,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  ufo@1.5.4:
+    resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
+
   unbox-primitive@1.0.2:
     resolution: {integrity: sha512-61pPlCD9h51VoreyJ0BReideM3MDKMKnh6+V9L08331ipq6Q8OFXZYiqP6n/tbHx4s5I9uRhcye6BrbkizkBDw==}
 
@@ -2448,6 +2466,10 @@ packages:
 
   undici-types@6.19.8:
     resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+
+  undici@6.20.1:
+    resolution: {integrity: sha512-AjQF1QsmqfJys+LXfGTNum+qw4S88CojRInG/6t31W/1fk6G59s92bnAvGz5Cmur+kQv2SURXEvvudLmbrE8QA==}
+    engines: {node: '>=18.17'}
 
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
@@ -2593,14 +2615,14 @@ snapshots:
     dependencies:
       '@floating-ui/utils': 0.2.8
 
-  '@floating-ui/dom@1.6.11':
+  '@floating-ui/dom@1.6.12':
     dependencies:
       '@floating-ui/core': 1.6.8
       '@floating-ui/utils': 0.2.8
 
   '@floating-ui/react-dom@2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@floating-ui/dom': 1.6.11
+      '@floating-ui/dom': 1.6.12
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
@@ -3748,6 +3770,8 @@ snapshots:
 
   defu@6.1.4: {}
 
+  destr@2.0.3: {}
+
   detect-node-es@1.1.0: {}
 
   didyoumean@1.2.2: {}
@@ -4556,6 +4580,8 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
+  node-fetch-native@1.6.4: {}
+
   node-fetch@2.7.0:
     dependencies:
       whatwg-url: 5.0.0
@@ -4608,6 +4634,12 @@ snapshots:
       call-bind: 1.0.7
       define-properties: 1.2.1
       es-object-atoms: 1.0.0
+
+  ofetch@1.4.1:
+    dependencies:
+      destr: 2.0.3
+      node-fetch-native: 1.6.4
+      ufo: 1.5.4
 
   once@1.4.0:
     dependencies:
@@ -5100,6 +5132,8 @@ snapshots:
 
   typescript@5.6.3: {}
 
+  ufo@1.5.4: {}
+
   unbox-primitive@1.0.2:
     dependencies:
       call-bind: 1.0.7
@@ -5110,6 +5144,8 @@ snapshots:
   uncrypto@0.1.3: {}
 
   undici-types@6.19.8: {}
+
+  undici@6.20.1: {}
 
   uri-js@4.4.1:
     dependencies:
