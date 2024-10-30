@@ -1,106 +1,39 @@
 'use client'
-import {
-	AudioWaveform,
-	Command,
-	Frame,
-	GalleryVerticalEnd,
-	Map,
-	PieChart,
-	Settings2,
-	SquareTerminal,
-} from 'lucide-react'
-import Main from '@/components/sidebar-main'
+import { Frame, Map, PieChart } from 'lucide-react'
 import User from '@/components/sidebar-user'
-import Switcher from '@/components/sidebar-switcher'
 import {
 	Sidebar,
 	SidebarContent,
 	SidebarFooter,
-	SidebarHeader,
 	SidebarRail,
 } from '@/components/ui/sidebar'
+import Projects from '@/components/sidebar-projects'
 
 const data = {
-	servers: [
+	projects: [
 		{
-			name: 'Enterprise',
-			logo: GalleryVerticalEnd,
-			plan: 'Enterprise',
+			name: 'Project 1',
+			url: '/1',
+			icon: Frame,
 		},
 		{
-			name: 'Startup',
-			logo: AudioWaveform,
-			plan: 'Startup',
+			name: 'Project 2',
+			url: '/2',
+			icon: PieChart,
 		},
 		{
-			name: 'Free',
-			logo: Command,
-			plan: 'Free',
-		},
-	],
-	main: [
-		{
-			title: 'Server',
-			url: '#',
-			icon: SquareTerminal,
-			isActive: false,
-			items: [
-				{
-					title: 'Overview',
-					url: '#',
-				},
-				{
-					title: 'Metrics',
-					url: '#',
-				},
-				{
-					title: 'Logs',
-					url: '#',
-				},
-				{
-					title: 'Backups',
-					url: '#',
-				},
-				{
-					title: 'Service',
-					url: '#',
-				},
-			],
-		},
-		{
-			title: 'Settings',
-			url: '#',
-			icon: Settings2,
-			items: [
-				{
-					title: 'General',
-					url: '#',
-				},
-				{
-					title: 'Team',
-					url: '#',
-				},
-				{
-					title: 'Billing',
-					url: '#',
-				},
-				{
-					title: 'Limits',
-					url: '#',
-				},
-			],
+			name: 'Project 3',
+			url: '/3',
+			icon: Map,
 		},
 	],
 }
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	return (
-		<Sidebar collapsible="icon" {...props}>
-			<SidebarHeader>
-				<Switcher servers={data.servers} />
-			</SidebarHeader>
+		<Sidebar {...props}>
 			<SidebarContent>
-				<Main items={data.main} />
+				<Projects projects={data.projects} />
 			</SidebarContent>
 			<SidebarFooter>
 				<User />
