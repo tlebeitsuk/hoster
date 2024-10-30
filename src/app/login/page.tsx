@@ -2,9 +2,9 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth-client";
-import '../globals.css'
 
 export default function Login() {
+
   const handleLogin = async () => {
     const data = await auth.signIn.social({
       provider: "github", 
