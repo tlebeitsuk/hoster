@@ -7,15 +7,9 @@ import {
 } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import { SidebarTrigger } from '@/components/ui/sidebar'
-import { auth } from '@/lib/auth'
-import { headers } from 'next/headers'
 import Link from 'next/link'
 
 export default async function DashboardPage() {
-	const session = await auth.api.getSession({
-		headers: headers(),
-	})
-
 	return (
 		<>
 			<header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-[[data-collapsible=icon]]/sidebar-wrapper:h-12">
@@ -36,7 +30,7 @@ export default async function DashboardPage() {
 				</div>
 			</header>
 			<div className="p-4 pt-0">
-				<p>Welcome, {session?.user?.name}</p>
+				<p>Project</p>
 			</div>
 		</>
 	)
