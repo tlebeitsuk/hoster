@@ -17,25 +17,34 @@ Platform var man kan skapa och använda resurser för sina appar. Ledorden är a
 
 ### Setup local postgresql database
 
-Install Docker Desktop and run the following command:
+1. Install Docker Desktop and run the following command:
 
 ```bash
 docker-compose up -d
 ```
 
-Update the `.env` file with the following:
+2. Update the `.env` file with the following:
 
 ```bash
 DATABASE_URL=postgresql://postgres:password@localhost:5432/postgres
 ```
 
-Then, install the dependencies:
+3. Generate and push schema to database
+   
+```bash
+pnpm db:generate
+pnpm db:migrate
+```
+
+## Local dev server
+
+1. Install dependencies:
 
 ```bash
 pnpm install
 ```
 
-Then, run the development server:
+2. Then, run the development server:
 
 ```bash
 pnpm dev
