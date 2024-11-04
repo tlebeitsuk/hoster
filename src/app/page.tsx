@@ -134,7 +134,7 @@ export default function Home() {
 				</section>
 			</div>
 			<footer className="flex justify-center py-6 px-4 border-t">
-				<p className="text-xs text-gray-500 dark:text-gray-400">
+				<p className="text-xs text-muted-foreground">
 					&copy; 2024 Hoster. All rights reserved.
 				</p>
 			</footer>
