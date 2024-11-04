@@ -35,6 +35,7 @@ import { toast } from 'sonner'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Loader2, Save, Trash2, User } from 'lucide-react'
 import Link from 'next/link'
+import { deleteAccount } from '@/data/account/delete-account'
 
 export default function ProfilePage() {
 	const router = useRouter()
@@ -65,21 +66,15 @@ export default function ProfilePage() {
 		)
 	}
 
-	async function deleteAccount() {
+	async function handleDeleteAccount() {
 		setIsDeleting(true)
 		try {
-			const response = await fetch('/api/delete-account', {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			})
-
-			if (response.ok) {
-				toast.success('Account deleted successfully')
+			const result = await deleteAccount()
+			if (result.success) {
+				toast.success(result.message)
 				router.push('/login')
 			} else {
-				throw new Error('Failed to delete account')
+				throw new Error(result.message)
 			}
 		} catch (error) {
 			console.error('Error deleting account:', error)
@@ -194,7 +189,7 @@ export default function ProfilePage() {
 									</DialogClose>
 									<Button
 										variant="destructive"
-										onClick={deleteAccount}
+										onClick={handleDeleteAccount}
 										disabled={isDeleting}
 									>
 										{isDeleting ? (
