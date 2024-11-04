@@ -25,7 +25,7 @@ export default function User() {
 
 	async function logOut() {
 		await auth.signOut()
-		router.push('/login')
+		router.push('/')
 	}
 
 	const { isMobile } = useSidebar()

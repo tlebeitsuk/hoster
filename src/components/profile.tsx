@@ -72,7 +72,7 @@ export default function ProfilePage() {
 			const result = await deleteAccount()
 			if (result.success) {
 				toast.success(result.message)
-				router.push('/login')
+				router.push('/')
 			} else {
 				throw new Error(result.message)
 			}
