@@ -4,16 +4,19 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { Separator } from "@/components/ui/separator"
-import { SidebarTrigger } from "@/components/ui/sidebar"
-import Link from "next/link"
-import { getServers } from "@/data/projects/get-servers"
+} from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
+import { SidebarTrigger } from "@/components/ui/sidebar";
+import Link from "next/link";
+import { getServers } from "@/data/projects/get-servers";
 
-export default async function DashboardPage() {
-  const servers = await getServers()
-
-  console.log("servers: ", servers)
+export default async function ProjectPage({
+  params,
+}: {
+  params: Promise<{ projectId: string }>;
+}) {
+  const projectId = (await params).projectId;
+  const servers = await getServers(projectId);
 
   return (
     <>
@@ -36,7 +39,17 @@ export default async function DashboardPage() {
       </header>
       <div className="p-4 pt-0">
         <p>Project</p>
+
+        <ul>
+          {servers.map((server) => {
+            return (
+              <li key={server.id}>
+                {server.name} {server.status}
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </>
-  )
+  );
 }
