@@ -1,4 +1,10 @@
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbList,
@@ -40,12 +46,41 @@ export default async function ProjectPage({
       <div className="p-4 pt-0">
         <p>Project</p>
 
-        <ul>
+        <ul className=" bg-zinc-100 border-2 mt-5 border-zinc-200 rounded-sm p-3">
           {servers.map((server) => {
+
+            const statusClass = server.status === "Running" ? "text-green-500" : "text-red-500";
+            
+            const createdAt = { time: server.created_at };
+            const createdDate = new Date(createdAt.time).toLocaleString('fi-US', {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric'
+            });
+
+            const lastUsed = { time: server.last_used_at };
+            const lastUsedDate = new Date(lastUsed.time).toLocaleString('fi-US', {
+              year: 'numeric',
+              month: 'numeric',
+              day: 'numeric'
+            });
+
             return (
-              <li key={server.id}>
-                {server.name} {server.status}
-              </li>
+              <>
+                <Accordion type="single" collapsible className="w-full">
+                  <AccordionItem value="item-1">
+                    <AccordionTrigger>{server.name}</AccordionTrigger>
+                    <AccordionContent>
+                      <ul>
+                        <li className={statusClass}><b>{server.status}</b></li>
+                        <li ><b>Last used at:</b> {lastUsedDate}</li>
+                        <li ><b>Created at:</b> {createdDate}</li>
+                        <li ><b>Description:</b> {server.description}</li>
+                      </ul>
+                    </AccordionContent>
+                  </AccordionItem>
+                </Accordion>
+              </>
             );
           })}
         </ul>
