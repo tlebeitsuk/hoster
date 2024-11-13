@@ -71,11 +71,11 @@ export default async function ProjectPage({
                   <AccordionItem value="item-1">
                     <AccordionTrigger>{server.name}</AccordionTrigger>
                     <AccordionContent>
-                      <ul>
-                        <li className={statusClass}><b>{server.status}</b></li>
-                        <li ><b>Last used at:</b> {lastUsedDate}</li>
-                        <li ><b>Created at:</b> {createdDate}</li>
-                        <li ><b>Description:</b> {server.description}</li>
+                      <ul key={server.name + 'overview'}>
+                        <li key={server.status} className={statusClass}><b>{server.status}</b></li>
+                        <li key={server.last_used_at}><b>Last used at:</b> {lastUsedDate}</li>
+                        <li key={server.created_at}><b>Created at:</b> {createdDate}</li>
+                        <li key={server.description}><b>Description:</b> {server.description}</li>
                       </ul>
                     </AccordionContent>
                   </AccordionItem>
