@@ -15,6 +15,7 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { getServers } from "@/data/projects/get-servers";
+import { formatDistanceToNow, subDays } from "date-fns";
 
 export default async function ProjectPage({
   params,
@@ -50,21 +51,15 @@ export default async function ProjectPage({
           {servers.map((server) => {
 
             const statusClass = server.status === "Running" ? "text-green-500" : "text-red-500";
+
+            const createdAtResult = formatDistanceToNow(
+              server.created_at
+            )
+
+            const usedAtResult = formatDistanceToNow(
+              server.last_used_at
+            )
             
-            const createdAt = { time: server.created_at };
-            const createdDate = new Date(createdAt.time).toLocaleString('fi-US', {
-              year: 'numeric',
-              month: 'numeric',
-              day: 'numeric'
-            });
-
-            const lastUsed = { time: server.last_used_at };
-            const lastUsedDate = new Date(lastUsed.time).toLocaleString('fi-US', {
-              year: 'numeric',
-              month: 'numeric',
-              day: 'numeric'
-            });
-
             return (
               <>
                 <Accordion type="single" collapsible className="w-full">
@@ -73,8 +68,8 @@ export default async function ProjectPage({
                     <AccordionContent>
                       <ul key={server.name + 'overview'}>
                         <li key={server.status} className={statusClass}><b>{server.status}</b></li>
-                        <li key={server.last_used_at}><b>Last used at:</b> {lastUsedDate}</li>
-                        <li key={server.created_at}><b>Created at:</b> {createdDate}</li>
+                        <li key={server.last_used_at}><b>Last used at:</b> {usedAtResult} ago</li>
+                        <li key={server.created_at}><b>Created at:</b> {createdAtResult} ago</li>
                         <li key={server.description}><b>Description:</b> {server.description}</li>
                       </ul>
                     </AccordionContent>
