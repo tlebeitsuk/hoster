@@ -72,7 +72,7 @@ export default function ProfilePage() {
 			const result = await deleteAccount()
 			if (result.success) {
 				toast.success(result.message)
-				router.push('/login')
+				router.push('/')
 			} else {
 				throw new Error(result.message)
 			}
@@ -105,7 +105,7 @@ export default function ProfilePage() {
 		<div className="min-h-screen bg-background">
 			<header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
 				<SidebarTrigger className="-ml-1" />
-				<Separator orientation="vertical" className="mx-2 h-4" />
+				<Separator orientation="vertical" className="mr-2 h-4" />
 				<Breadcrumb>
 					<BreadcrumbList>
 						<BreadcrumbItem className="hidden md:block">
