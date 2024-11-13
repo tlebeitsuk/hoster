@@ -18,6 +18,7 @@ import {
 import { auth } from '@/lib/auth-client'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { ThemeToggle } from './sidebar-theme-toggle'
 
 export default function User() {
 	const router = useRouter()
@@ -64,6 +65,7 @@ export default function User() {
 									Profile
 								</Link>
 							</DropdownMenuItem>
+							<ThemeToggle />
 						</DropdownMenuGroup>
 						<DropdownMenuSeparator />
 						<DropdownMenuItem asChild>

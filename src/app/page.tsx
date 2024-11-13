@@ -1,24 +1,16 @@
+import { ThemeToggle } from '@/components/theme-toggle'
 import { Button } from '@/components/ui/button'
-import {
-	Card,
-	CardContent,
-	CardDescription,
-	CardFooter,
-	CardHeader,
-	CardTitle,
-} from '@/components/ui/card'
-import { Check } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Home() {
 	return (
 		<>
-			<header className="flex justify-between items-center py-4 px-6 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 sticky top-0 w-full border-b">
+			<header className="flex justify-between items-center py-4 px-8 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 sticky top-0 w-full border-b">
 				<nav className="flex gap-6 items-center">
-					<span className="ml-2 text-lg font-bold">Hoster</span>
+					<span className="text-lg font-bold">Hoster</span>
 				</nav>
 				<div>
-					<Button asChild variant="link">
+					<Button asChild variant="link" className="px-0">
 						<Link href="/login">Login</Link>
 					</Button>
 				</div>
@@ -42,10 +34,11 @@ export default function Home() {
 					</div>
 				</section>
 			</div>
-			<footer className="flex justify-center py-6 px-4 border-t">
+			<footer className="flex items-center justify-between py-4 px-8 border-t">
 				<p className="text-xs text-muted-foreground">
 					&copy; 2024 Hoster. All rights reserved.
 				</p>
+				<ThemeToggle />
 			</footer>
 		</>
 	)
