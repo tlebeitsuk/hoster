@@ -1,9 +1,11 @@
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion"
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -47,34 +49,42 @@ export default async function ProjectPage({
       <div className="p-4 pt-0">
         <p>Project</p>
 
-        <ul className=" bg-zinc-100 border-2 mt-5 border-zinc-200 rounded-sm p-3">
+        <ul>
           {servers.map((server) => {
 
             const statusClass = server.status === "Running" ? "text-green-500" : "text-red-500";
 
             const createdAtResult = formatDistanceToNow(
               server.created_at
-            , { addSuffix: true });
+            ,{ addSuffix: true });
 
             const usedAtResult = formatDistanceToNow(
               server.last_used_at
-            , { addSuffix: true });
+            ,{ addSuffix: true });
             
             return (
               <>
-                <Accordion type="single" collapsible className="w-full">
-                  <AccordionItem value="item-1">
-                    <AccordionTrigger>{server.name}</AccordionTrigger>
-                    <AccordionContent>
-                      <ul key={server.name + 'overview'}>
-                        <li key={server.status} className={statusClass}><b>{server.status}</b></li>
-                        <li key={server.last_used_at}><b>Last used at:</b> {usedAtResult}</li>
-                        <li key={server.created_at}><b>Created at:</b> {createdAtResult}</li>
-                        <li key={server.description}><b>Description:</b> {server.description}</li>
-                      </ul>
-                    </AccordionContent>
-                  </AccordionItem>
-                </Accordion>
+                <div className=" bg-zinc-100 border-2 mt-5 border-zinc-200 rounded-md p-3">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead className="w-[200px]">Server name</TableHead>
+                        <TableHead className="w-[200px]">Status</TableHead>
+                        <TableHead className="w-[100px]">Created</TableHead>
+                        <TableHead>Last used</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      <TableRow>
+                        <TableCell><a href="#" className="font-medium hover:underline">{server.name}</a>
+                        </TableCell>
+                        <TableCell className={statusClass}>{server.status}</TableCell>
+                        <TableCell>{createdAtResult}</TableCell>
+                        <TableCell>{usedAtResult}</TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </div>
               </>
             );
           })}
