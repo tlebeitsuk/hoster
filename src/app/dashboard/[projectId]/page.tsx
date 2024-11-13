@@ -54,11 +54,11 @@ export default async function ProjectPage({
 
             const createdAtResult = formatDistanceToNow(
               server.created_at
-            )
+            , { addSuffix: true });
 
             const usedAtResult = formatDistanceToNow(
               server.last_used_at
-            )
+            , { addSuffix: true });
             
             return (
               <>
@@ -68,8 +68,8 @@ export default async function ProjectPage({
                     <AccordionContent>
                       <ul key={server.name + 'overview'}>
                         <li key={server.status} className={statusClass}><b>{server.status}</b></li>
-                        <li key={server.last_used_at}><b>Last used at:</b> {usedAtResult} ago</li>
-                        <li key={server.created_at}><b>Created at:</b> {createdAtResult} ago</li>
+                        <li key={server.last_used_at}><b>Last used at:</b> {usedAtResult}</li>
+                        <li key={server.created_at}><b>Created at:</b> {createdAtResult}</li>
                         <li key={server.description}><b>Description:</b> {server.description}</li>
                       </ul>
                     </AccordionContent>
