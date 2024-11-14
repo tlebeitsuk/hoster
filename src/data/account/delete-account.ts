@@ -1,7 +1,7 @@
 'use server'
 import { auth } from '@/lib/auth'
 import { headers } from 'next/headers'
-import { prisma } from '@/lib/prisma'
+import prisma from '@/lib/prisma'
 
 export async function deleteAccount() {
     try {
