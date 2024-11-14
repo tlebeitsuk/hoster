@@ -23,18 +23,9 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb";
 import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loader2, Save, Trash2, User } from "lucide-react";
-import Link from "next/link";
 import { deleteAccount } from "@/data/account/delete-account";
 
 export default function ProfilePage() {
@@ -102,22 +93,6 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b bg-background px-4">
-        <SidebarTrigger className="-ml-1" />
-        <Separator orientation="vertical" className="mr-2 h-4" />
-        <Breadcrumb>
-          <BreadcrumbList>
-            <BreadcrumbItem className="hidden md:block">
-              <Link href="/dashboard">Dashboard</Link>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator className="hidden md:block" />
-            <BreadcrumbItem>
-              <BreadcrumbPage>Profile</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-      </header>
       <main className="container mx-auto py-8 p-5">
         <Card className="max-w-6xl mx-auto">
           <CardHeader>
@@ -228,6 +203,5 @@ export default function ProfilePage() {
           </CardFooter>
         </Card>
       </main>
-    </div>
   );
 }
