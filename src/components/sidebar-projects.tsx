@@ -13,9 +13,8 @@ export default function Projects({
 	projects,
 }: {
 	projects: {
-		name: string
-		url: string
-		icon: LucideIcon
+		title: string
+		id: number
 	}[]
 }) {
 	return (
@@ -23,24 +22,20 @@ export default function Projects({
 			<SidebarGroupLabel>Projects</SidebarGroupLabel>
 			<SidebarMenu>
 				{projects.map(item => (
-					<SidebarMenuItem key={item.name}>
+					<SidebarMenuItem key={item.id}>
 						<SidebarMenuButton asChild>
-							<Link href={'/dashboard' + item.url}>
-								<item.icon />
-								<span>{item.name}</span>
+							<Link href={'/dashboard/' + item.id}>
+								<span>{item.title}</span>
 							</Link>
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				))}
-				
           <SidebarMenuButton asChild>
 						<Link href="/dashboard/projects/new">
 							<Plus />
 							<span>Create new project</span>
 						</Link>
           </SidebarMenuButton>
-        
-
 			</SidebarMenu>
 		</SidebarGroup>
 	)
