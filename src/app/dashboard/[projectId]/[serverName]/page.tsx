@@ -29,7 +29,6 @@ export default async function InstancePage({ params }: PageByIdProps) {
   const { projectId, serverName } = params;
   const servers = await getServers(projectId);
   
-  // Find the server matching the serverName from the servers list
   const server = servers.find((s) => s.name === serverName);
 
   if (!server) {
@@ -64,13 +63,9 @@ export default async function InstancePage({ params }: PageByIdProps) {
           </BreadcrumbList>
         </Breadcrumb>
       <div className="flex flex-wrap items-center flex-col pt-20 gap-5">
-
-    
-
         <h1>
           <Link href={'/dashboard/' + projectId + '/' + serverName} className="font-medium text-xl hover:underline">{serverName}</Link>
         </h1>
-
         <div className="mt-5 p-3">
           <Table>
             <TableHeader>
@@ -93,9 +88,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
             </TableBody>
           </Table>
         </div>
-
       </div>
     </>
-      
   );
 }
