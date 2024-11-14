@@ -72,7 +72,7 @@ export default async function ProjectPage({
                       <TableRow>
                         <TableHead className="w-[200px]">Server name</TableHead>
                         <TableHead className="w-[200px]">Status</TableHead>
-                        <TableHead className="w-[100px]">Created</TableHead>
+                        <TableHead className="w-[150px]">Created</TableHead>
                         <TableHead>Last used</TableHead>
                       </TableRow>
                     </TableHeader>

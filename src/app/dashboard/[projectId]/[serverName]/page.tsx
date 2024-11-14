@@ -68,7 +68,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
             <TableHeader>
               <TableRow>
                 <TableHead className="w-[200px]">Status</TableHead>
-                <TableHead className="w-[100px]">Created</TableHead>
+                <TableHead className="w-[150px]">Created</TableHead>
                 <TableHead>Last used</TableHead>
                 <TableHead>Location</TableHead>
                 <TableHead>Type</TableHead>
