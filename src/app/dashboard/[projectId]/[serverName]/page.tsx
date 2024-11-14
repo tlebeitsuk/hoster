@@ -15,7 +15,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
 
 type PageByIdProps = {
@@ -63,9 +62,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
           </BreadcrumbList>
         </Breadcrumb>
       <div className="flex flex-wrap items-center flex-col pt-20 gap-5">
-        <h1>
-          <Link href={'/dashboard/' + projectId + '/' + serverName} className="font-medium text-xl hover:underline">{serverName}</Link>
-        </h1>
+        <h1 className="font-medium text-xl">{serverName}</h1>
         <div className="mt-5 p-3">
           <Table>
             <TableHeader>
