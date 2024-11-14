@@ -31,7 +31,7 @@ const data = {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
-    <Sidebar {...props} className="bg-sky-50">
+    <Sidebar {...props} className="bg-sky-950">
       <SidebarContent>
         <Projects projects={data.projects} />
       </SidebarContent>
