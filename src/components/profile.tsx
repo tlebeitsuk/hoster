@@ -225,19 +225,6 @@ export default function ProfilePage() {
                 </DialogFooter>
               </DialogContent>
             </Dialog>
-            {/* <Button onClick={updateProfile} disabled={isSaving}>
-              {isSaving ? (
-                <>
-                  <Loader2 className="mr-1 size-4 animate-spin" />
-                  Saving...
-                </>
-              ) : (
-                <>
-                  <Save className="mr-1 size-4" />
-                  Save Changes
-                </>
-              )}
-            </Button> */}
           </CardFooter>
         </Card>
       </main>
