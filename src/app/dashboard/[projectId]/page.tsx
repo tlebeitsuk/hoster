@@ -61,6 +61,8 @@ export default async function ProjectPage({
             const usedAtResult = formatDistanceToNow(
               server.last_used_at
             ,{ addSuffix: true });
+
+            const serverName = server.name;
             
             return (
               <>
@@ -76,7 +78,8 @@ export default async function ProjectPage({
                     </TableHeader>
                     <TableBody>
                       <TableRow>
-                        <TableCell><a href="#" className="font-medium hover:underline">{server.name}</a>
+                        <TableCell>
+                          <Link href={'/dashboard/' + projectId + '/' + serverName} className="font-medium hover:underline">{serverName}</Link>
                         </TableCell>
                         <TableCell className={statusClass}>{server.status}</TableCell>
                         <TableCell>{createdAtResult}</TableCell>
