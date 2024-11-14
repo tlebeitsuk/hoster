@@ -1,7 +1,7 @@
 'use client'
-import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { auth } from '@/lib/auth-client'
+import { Github } from "lucide-react";
 
 export default function Login() {
 	const handleLogin = async () => {
@@ -25,13 +25,7 @@ export default function Login() {
 				variant="outline"
 				className=" border-2 border-gray-700 px-16 py-4 flex gap-2 shadow-xl"
 			>
-				<Image
-					id="gitLogo"
-					src="/githubL.png"
-					alt="github logo"
-					width={30}
-					height={100}
-				></Image>
+				<Github className="mr-1 size-4" />
 				<p className="text-[16px]">Login with Github</p>
 			</Button>
 		</div>
