@@ -7,10 +7,10 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { LaptopIcon, MoonIcon, SunIcon } from 'lucide-react'
+import { Check, LaptopIcon, MoonIcon, SunIcon } from 'lucide-react'
 
 export function ThemeToggle() {
-	const { setTheme } = useTheme()
+	const { setTheme, theme } = useTheme()
 
 	return (
 		<DropdownMenu>
@@ -24,14 +24,17 @@ export function ThemeToggle() {
 				<DropdownMenuItem onClick={() => setTheme('light')}>
 					<SunIcon />
 					Light
+					{theme === 'light' && <Check />}
 				</DropdownMenuItem>
 				<DropdownMenuItem onClick={() => setTheme('dark')}>
 					<MoonIcon />
 					Dark
+					{theme === 'dark' && <Check />}
 				</DropdownMenuItem>
 				<DropdownMenuItem onClick={() => setTheme('system')}>
 					<LaptopIcon />
 					System
+					{theme === 'system' && <Check />}
 				</DropdownMenuItem>
 			</DropdownMenuContent>
 		</DropdownMenu>
