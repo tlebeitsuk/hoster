@@ -15,7 +15,7 @@ export default function Page() {
     const handleCreateProject = async () => {
         try {
             const createdProject = await newProject(title, description);
-            router.push(`/dashboard/${createdProject.title}`);
+            router.push(`/dashboard/${createdProject.id}`);
             router.refresh();
         } catch (error) {
             console.error("Error creating project:", error);
