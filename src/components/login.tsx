@@ -13,7 +13,7 @@ export default function Login() {
 	return (
 		<div className="flex items-center justify-center flex-col gap-6 min-h-screen w-full">
 			<div className="flex gap-4 items-center w-60">
-				<div className="bg-black w-0.5 h-10 rounded-lg shadow-lg"></div>
+				<div className="bg-black dark:bg-white w-0.5 h-10 rounded-lg shadow-lg"></div>
 				<div>
 					<h1 className="text-3xl">Welcome,</h1>
 					<p className="tracking-wide">or welcome back!</p>
