@@ -45,15 +45,23 @@ export default async function InstancePage({ params }: PageByIdProps) {
   const { projectId, serverName } = params;
   const servers = await getServers(projectId);
   const server = servers.find((s) => s.name === serverName);
+
   const statusClass = server.status === "Running" ? "text-green-500" : "text-red-500";
+
+  const memory = server.state.memory
+  const totalMemory = Math.round((memory.total / 1000000000) * 10) / 10
+  const usedMemory = Math.round((memory.usage / 1000000000) * 10) / 10
+  const cpu = Math.round((server.state.cpu.usage / 1000000000) * 10) / 10
+
+  const memoryPercentage =  usedMemory / (totalMemory / 100)
+  const memoryPerc = parseFloat(memoryPercentage.toFixed(1))
+  
+  
+
 
   if (!server) {
     return <div>Server not found</div>;
   }
-
-  // const RAM = server.metadata
-  console.log(server);
-  
 
   // const createdAtResult = formatDistanceToNow(
   //   server.created_at
@@ -101,12 +109,12 @@ export default async function InstancePage({ params }: PageByIdProps) {
         <div className="mt-5 p-3 flex gap-5">
           <Card className="w-[350px]">
             <CardHeader>
-              <CardTitle>Memory Usage <span className="text-green-500">[RAM]</span></CardTitle>
-              <CardDescription>31%/100%</CardDescription>
+              <CardTitle>Memory <span className="text-green-500">[RAM]</span></CardTitle>
+              <CardDescription>{memoryPerc}%/100%</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Total capacity: 16 GB</p>
-              <p>Used capacity: 16 GB</p>
+              <p>Total capacity: {totalMemory} GB</p>
+              <p>Current usage: {usedMemory} GB</p>
             </CardContent>
             <CardFooter className="flex justify-between">
               
@@ -115,12 +123,11 @@ export default async function InstancePage({ params }: PageByIdProps) {
 
           <Card className="w-[350px]">
             <CardHeader>
-              <CardTitle> <span className="text-blue-500">[Disk]</span> Storage</CardTitle>
+              <CardTitle> <span className="text-blue-500">[CPU]</span> Usage</CardTitle>
               <CardDescription>31%/100%</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Total capacity: 16 GB</p>
-              <p>Used capacity: 16 GB</p>
+              <p>Used capacity: {cpu} GB</p>
             </CardContent>
             <CardFooter className="flex justify-between">
               
@@ -153,3 +160,4 @@ export default async function InstancePage({ params }: PageByIdProps) {
     </>
   );
 }
+
