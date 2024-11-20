@@ -2,13 +2,15 @@
 import {
 	Breadcrumb,
 	BreadcrumbItem,
+	BreadcrumbLink,
 	BreadcrumbList,
+	BreadcrumbPage,
 	BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { SidebarTrigger } from './ui/sidebar'
 
 function generateBreadcrumbs(pathname: string) {
@@ -30,14 +32,20 @@ export default function ClientHeader() {
 			<Breadcrumb>
 				<BreadcrumbList>
 					{breadcrumbs.map((breadcrumb, index) => (
-						<BreadcrumbItem key={breadcrumb.href}>
-							{index < breadcrumbs.length - 1 ? (
-								<Link href={breadcrumb.href}>{breadcrumb.label}</Link>
-							) : (
-								<span className="text-primary">{breadcrumb.label}</span>
-							)}
+						<React.Fragment key={breadcrumb.href}>
+							<BreadcrumbItem>
+								{index < breadcrumbs.length - 1 ? (
+									<BreadcrumbLink asChild>
+										<Link href={breadcrumb.href}>{breadcrumb.label}</Link>
+									</BreadcrumbLink>
+								) : (
+									<BreadcrumbPage className="text-primary">
+										{breadcrumb.label}
+									</BreadcrumbPage>
+								)}
+							</BreadcrumbItem>
 							{index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-						</BreadcrumbItem>
+						</React.Fragment>
 					))}
 				</BreadcrumbList>
 			</Breadcrumb>
