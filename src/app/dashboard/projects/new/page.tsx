@@ -15,12 +15,12 @@ export default function Page() {
     const handleCreateProject = async () => {
         try {
             const createdProject = await newProject(title, description);
-            router.push(`/dashboard/${createdProject.id}`);
+            router.push(`/dashboard/${createdProject.title}`);
+            router.refresh();
         } catch (error) {
             console.error("Error creating project:", error);
         }
     }
-
     return (
         <div className="flex items-center justify-center h-screen">
             <div className="border p-6 rounded-lg shadow-lg space-y-4 w-full max-w-lg">
