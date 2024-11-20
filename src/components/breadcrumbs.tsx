@@ -10,7 +10,7 @@ import {
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useMemo } from 'react'
+import { Fragment, useMemo } from 'react'
 import { SidebarTrigger } from './ui/sidebar'
 
 function generateBreadcrumbs(pathname: string) {
@@ -32,7 +32,7 @@ export default function ClientHeader() {
 			<Breadcrumb>
 				<BreadcrumbList>
 					{breadcrumbs.map((breadcrumb, index) => (
-						<React.Fragment key={breadcrumb.href}>
+						<Fragment key={breadcrumb.href}>
 							<BreadcrumbItem>
 								{index < breadcrumbs.length - 1 ? (
 									<BreadcrumbLink asChild>
@@ -45,7 +45,7 @@ export default function ClientHeader() {
 								)}
 							</BreadcrumbItem>
 							{index < breadcrumbs.length - 1 && <BreadcrumbSeparator />}
-						</React.Fragment>
+						</Fragment>
 					))}
 				</BreadcrumbList>
 			</Breadcrumb>
