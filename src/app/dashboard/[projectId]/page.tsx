@@ -24,14 +24,16 @@ export default async function ProjectPage({
       <div className="p-4">
         <p>Project</p>
         <div className="p-6 pt-0  mt-4 border-[1px] rounded-md border-[E2E8F0]">
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[250px]">Server name</TableHead>
-              <TableHead className="w-[250px]">Status</TableHead>
-              <TableHead className="w-[250px]">Created</TableHead>
-              <TableHead>Last used</TableHead>
-            </TableRow>
-          </TableHeader>
+          <div className="flex w-full justify-evenly">
+            <TableHeader>
+              <TableRow>
+                <TableHead>Server name</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Created</TableHead>
+                <TableHead>Last used</TableHead>
+              </TableRow>
+            </TableHeader>
+          </div>
           <Separator />
           <ul>
             {servers.map((server) => {
@@ -50,10 +52,10 @@ export default async function ProjectPage({
 
               return (
                 <>
-                  <div className="mt-5 rounded-md p-3">
+                  <div className="p-3">
                     <Table>
                       <TableBody>
-                        <TableRow>
+                        <TableRow className="flex justify-around">
                           <TableCell>
                             <Link
                               href={
