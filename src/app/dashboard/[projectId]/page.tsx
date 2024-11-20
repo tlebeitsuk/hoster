@@ -5,10 +5,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import Link from "next/link";
 import { getServers } from "@/data/projects/get-servers";
 import { formatDistanceToNow } from "date-fns";
+import { Separator } from "@/components/ui/separator";
 
 export default async function ProjectPage({
   params,
@@ -22,50 +23,61 @@ export default async function ProjectPage({
     <>
       <div className="p-4">
         <p>Project</p>
+        <div className="p-6 pt-0  mt-4 border-[1px] rounded-md border-[E2E8F0]">
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[250px]">Server name</TableHead>
+              <TableHead className="w-[250px]">Status</TableHead>
+              <TableHead className="w-[250px]">Created</TableHead>
+              <TableHead>Last used</TableHead>
+            </TableRow>
+          </TableHeader>
+          <Separator />
+          <ul>
+            {servers.map((server) => {
+              const statusClass =
+                server.status === "Running" ? "text-green-500" : "text-red-500";
 
-        <ul>
-          {servers.map((server) => {
+              const createdAtResult = formatDistanceToNow(server.created_at, {
+                addSuffix: true,
+              });
 
-            const statusClass = server.status === "Running" ? "text-green-500" : "text-red-500";
+              const usedAtResult = formatDistanceToNow(server.last_used_at, {
+                addSuffix: true,
+              });
 
-            const createdAtResult = formatDistanceToNow(
-              server.created_at
-            ,{ addSuffix: true });
+              const serverName = server.name;
 
-            const usedAtResult = formatDistanceToNow(
-              server.last_used_at
-            ,{ addSuffix: true });
-
-            const serverName = server.name;
-            
-            return (
-              <>
-                <div className=" bg-zinc-100 border-2 mt-5 border-zinc-200 rounded-md p-3">
-                  <Table>
-                    <TableHeader>
-                      <TableRow>
-                        <TableHead className="w-[200px]">Server name</TableHead>
-                        <TableHead className="w-[200px]">Status</TableHead>
-                        <TableHead className="w-[150px]">Created</TableHead>
-                        <TableHead>Last used</TableHead>
-                      </TableRow>
-                    </TableHeader>
-                    <TableBody>
-                      <TableRow>
-                        <TableCell>
-                          <Link href={'/dashboard/' + projectId + '/' + serverName} className="font-medium hover:underline">{serverName}</Link>
-                        </TableCell>
-                        <TableCell className={statusClass}>{server.status}</TableCell>
-                        <TableCell>{createdAtResult}</TableCell>
-                        <TableCell>{usedAtResult}</TableCell>
-                      </TableRow>
-                    </TableBody>
-                  </Table>
-                </div>
-              </>
-            );
-          })}
-        </ul>
+              return (
+                <>
+                  <div className="mt-5 rounded-md p-3">
+                    <Table>
+                      <TableBody>
+                        <TableRow>
+                          <TableCell>
+                            <Link
+                              href={
+                                "/dashboard/" + projectId + "/" + serverName
+                              }
+                              className="font-medium hover:underline"
+                            >
+                              {serverName}
+                            </Link>
+                          </TableCell>
+                          <TableCell className={statusClass}>
+                            {server.status}
+                          </TableCell>
+                          <TableCell>{createdAtResult}</TableCell>
+                          <TableCell>{usedAtResult}</TableCell>
+                        </TableRow>
+                      </TableBody>
+                    </Table>
+                  </div>
+                </>
+              );
+            })}
+          </ul>
+        </div>
       </div>
     </>
   );
