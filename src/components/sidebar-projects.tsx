@@ -22,9 +22,9 @@ export default function Projects({
 			<SidebarGroupLabel>Projects</SidebarGroupLabel>
 			<SidebarMenu>
 				{projects.map(item => (
-					<SidebarMenuItem key={item.id}>
+					<SidebarMenuItem key={item.title}>
 						<SidebarMenuButton asChild>
-							<Link href={'/dashboard/' + item.id}>
+							<Link href={'/dashboard/' + item.title}>
 								<span>{item.title}</span>
 							</Link>
 						</SidebarMenuButton>
