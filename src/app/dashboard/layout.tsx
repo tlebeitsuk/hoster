@@ -1,7 +1,8 @@
-import { AppSidebar } from '@/components/sidebar-app'
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar'
+import Breadcrumbs from '@/components/breadcrumbs'
+import { AppSidebar } from '@/components/sidebar-app'
 
-export default async function DashboardLayout({
+export default function DashboardLayout({
 	children,
 }: {
 	children: React.ReactNode
@@ -9,7 +10,10 @@ export default async function DashboardLayout({
 	return (
 		<SidebarProvider>
 			<AppSidebar />
-			<SidebarInset>{children}</SidebarInset>
+			<SidebarInset>
+				<Breadcrumbs />
+				{children}
+			</SidebarInset>
 		</SidebarProvider>
 	)
 }
