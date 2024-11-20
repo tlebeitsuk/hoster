@@ -24,7 +24,7 @@ export default function Projects({
 				{projects.map(item => (
 					<SidebarMenuItem key={item.id}>
 						<SidebarMenuButton asChild>
-							<Link href={'/dashboard/' + item.title}>
+							<Link href={'/dashboard/' + item.id}>
 								<span>{item.title}</span>
 							</Link>
 						</SidebarMenuButton>
