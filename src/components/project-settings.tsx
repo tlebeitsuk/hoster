@@ -17,8 +17,17 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Separator } from '@/components/ui/separator'
 
-export default function Component() {
-  const [projectName, setProjectName] = useState('')
+export default function Component({params}) {
+  const [newName, setNewName] = useState('')
+  
+  console.log(params);
+  const projects = params.projects
+  const projectID = params.projectID
+  
+  console.log(params.projects);
+  // const thisProject = projects.find(x => x.id === projectID);
+  // console.log(thisProject);
+  
 
   return (
     <Card className="w-full rounded-none">
@@ -41,8 +50,8 @@ export default function Component() {
               <Input
                 id="projectName"
                 type="text"
-                value={projectName}
-                onChange={(e) => setProjectName(e.target.value)}
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
                 placeholder=""
                 className="w-full"
               />
