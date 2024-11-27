@@ -1,13 +1,5 @@
 import { getServers } from "@/data/projects/get-servers";
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import {
   Table,
   TableBody,
   TableCell,
@@ -69,22 +61,6 @@ export default async function InstancePage({ params }: PageByIdProps) {
 
   return (
     <>
-      <Breadcrumb className="m-5">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink href={"/dashboard/" + projectId}>Project {projectId}</BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{serverName}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-
       <div className="flex flex-wrap m-5 flex-col gap-5">
         <div className="flex gap-2">
           <TooltipProvider>
