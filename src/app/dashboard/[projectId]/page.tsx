@@ -24,61 +24,58 @@ export default async function ProjectPage({
       <div className="p-4">
         <p>Project</p>
         <div className="p-6 pt-0  mt-4 border-[1px] rounded-md border-[E2E8F0]">
-          <div className="flex w-full justify-evenly">
-            <TableHeader>
-              <TableRow>
-                <TableHead>Server name</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Created</TableHead>
-                <TableHead>Last used</TableHead>
+          <Table>
+            <TableHeader className="w-full">
+              <TableRow className="w-full ">
+                <TableHead className="w-[25%]">Server name</TableHead>
+                <TableHead className="w-[25%]">Status</TableHead>
+                <TableHead className="w-[25%]">Created</TableHead>
+                <TableHead className="w-[25%]">Last used</TableHead>
               </TableRow>
             </TableHeader>
-          </div>
+          </Table>
           <Separator />
-          <ul>
-            {servers.map((server) => {
-              const statusClass =
-                server.status === "Running" ? "text-green-500" : "text-red-500";
 
-              const createdAtResult = formatDistanceToNow(server.created_at, {
-                addSuffix: true,
-              });
+          {servers.map((server) => {
+            const statusClass =
+              server.status === "Running" ? "text-green-500" : "text-red-500";
 
-              const usedAtResult = formatDistanceToNow(server.last_used_at, {
-                addSuffix: true,
-              });
+            const createdAtResult = formatDistanceToNow(server.created_at, {
+              addSuffix: true,
+            });
 
-              const serverName = server.name;
+            const usedAtResult = formatDistanceToNow(server.last_used_at, {
+              addSuffix: true,
+            });
 
-              return (
-                <>
-                  <div className="p-3">
-                    <Table>
-                      <TableBody>
-                        <TableRow className="flex justify-around">
-                          <TableCell>
-                            <Link
-                              href={
-                                "/dashboard/" + projectId + "/" + serverName
-                              }
-                              className="font-medium hover:underline"
-                            >
-                              {serverName}
-                            </Link>
-                          </TableCell>
-                          <TableCell className={statusClass}>
-                            {server.status}
-                          </TableCell>
-                          <TableCell>{createdAtResult}</TableCell>
-                          <TableCell>{usedAtResult}</TableCell>
-                        </TableRow>
-                      </TableBody>
-                    </Table>
-                  </div>
-                </>
-              );
-            })}
-          </ul>
+            const serverName = server.name;
+
+            return (
+              <>
+                <Table>
+                  <TableBody className="w-full">
+                    <TableRow>
+                      <TableCell>
+                        <Link
+                          href={"/dashboard/" + projectId + "/" + serverName}
+                          className="font-medium hover:underline w-[25%]"
+                        >
+                          {serverName}
+                        </Link>
+                      </TableCell>
+                      <TableCell className={`w-[25%] ${statusClass}`}>
+                        {server.status}
+                      </TableCell>
+                      <TableCell className="w-[25%]">
+                        {createdAtResult}
+                      </TableCell>
+                      <TableCell className="w-[25%]">{usedAtResult}</TableCell>
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </>
+            );
+          })}
         </div>
       </div>
     </>
