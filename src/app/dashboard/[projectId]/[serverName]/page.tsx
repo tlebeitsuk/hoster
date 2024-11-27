@@ -29,7 +29,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
+import { Progress } from "@/components/ui/progress"
 import { formatDistanceToNow } from "date-fns";
 import { Separator } from "@/components/ui/separator";
 import ServerStatusIcon from "@/components/server-status"
@@ -110,7 +110,10 @@ export default async function InstancePage({ params }: PageByIdProps) {
           <Card className="w-[350px]">
             <CardHeader>
               <CardTitle>Memory <span className="text-green-500">[RAM]</span></CardTitle>
-              <CardDescription>{memoryPerc}%/100%</CardDescription>
+              <div className="flex justify-end">
+                <CardDescription>{memoryPerc}%/100%</CardDescription>
+              </div>
+              <Progress value={memoryPerc} />
             </CardHeader>
             <CardContent>
               <p>Total capacity: {totalMemory} GB</p>
