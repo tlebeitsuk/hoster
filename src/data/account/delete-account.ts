@@ -8,11 +8,20 @@ export async function deleteAccount() {
         const session = await auth.api.getSession({
             headers: headers(),
         })
-        if (!session || !session.user) {
+        if (!session || !session.user || !session.user.id) {
             throw new Error('Unauthorized')
         }
 
         const userId = session.user.id
+
+        const userProjects = await prisma.project.findMany({
+            where: { userId: userId },
+        })
+
+        if (userProjects.length > 0) {
+            return { success: false, message: 'Cannot delete account. You have existing projects.' }
+        }
+
         await prisma.user.delete({
             where: { id: userId },
         })
