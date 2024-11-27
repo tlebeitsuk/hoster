@@ -5,24 +5,30 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table";
-import Link from "next/link";
-import { getServers } from "@/data/projects/get-servers";
-import { formatDistanceToNow } from "date-fns";
+} from '@/components/ui/table'
+import Link from 'next/link'
+import { getServers } from '@/data/projects/get-servers'
+import { formatDistanceToNow } from 'date-fns'
+import { Button } from '@/components/ui/button'
 import { Separator } from "@/components/ui/separator";
 
 export default async function ProjectPage({
   params,
 }: {
-  params: Promise<{ projectId: string }>;
+  params: Promise<{ projectId: string }>
 }) {
-  const projectId = (await params).projectId;
-  const servers = await getServers(projectId);
+  const projectId = (await params).projectId
+  const servers = await getServers(projectId)
 
   return (
     <>
       <div className="p-4">
-        <p>Project</p>
+           <div className="flex items-center justify-between">
+          <p>Project</p>
+          <Button size="sm" asChild>
+            <Link href={`/dashboard/${projectId}/settings`}>Settings</Link>
+          </Button>
+        </div>
         <div className="p-6 pt-0  mt-4 border-[1px] rounded-md border-[E2E8F0]">
           <Table>
             <TableHeader className="w-full">
@@ -35,6 +41,7 @@ export default async function ProjectPage({
             </TableHeader>
           </Table>
           <Separator />
+
 
           {servers.map((server) => {
             const statusClass =
@@ -74,10 +81,10 @@ export default async function ProjectPage({
                   </TableBody>
                 </Table>
               </>
-            );
+            )
           })}
         </div>
       </div>
     </>
-  );
+  )
 }
