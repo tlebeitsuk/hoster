@@ -25,7 +25,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -53,23 +52,20 @@ export default async function InstancePage({ params }: PageByIdProps) {
   const usedMemory = Math.round((memory.usage / 1000000000) * 10) / 10
   const cpu = Math.round((server.state.cpu.usage / 1000000000) * 10) / 10
 
-  const memoryPercentage =  usedMemory / (totalMemory / 100)
-  const memoryPerc = parseFloat(memoryPercentage.toFixed(1))
-  
-  
-
+  const memoryPercentage = usedMemory / (totalMemory / 100)
+  const MPercent = parseFloat(memoryPercentage.toFixed(1))
 
   if (!server) {
     return <div>Server not found</div>;
   }
 
-  // const createdAtResult = formatDistanceToNow(
-  //   server.created_at
-  // ,{ addSuffix: true });
+  const createdAtResult = formatDistanceToNow(
+    server.created_at
+  ,{ addSuffix: true });
 
-  // const usedAtResult = formatDistanceToNow(
-  //   server.last_used_at
-  // ,{ addSuffix: true });
+  const usedAtResult = formatDistanceToNow(
+    server.last_used_at
+  ,{ addSuffix: true });
 
   return (
     <>
@@ -106,59 +102,47 @@ export default async function InstancePage({ params }: PageByIdProps) {
         
         <Separator />
 
-        <div className="mt-5 p-3 flex gap-5">
+        <div className="p-3 flex gap-5">
           <Card className="w-[350px]">
             <CardHeader>
               <CardTitle>Memory <span className="text-green-500">[RAM]</span></CardTitle>
               <div className="flex justify-end">
-                <CardDescription>{memoryPerc}%/100%</CardDescription>
+                <CardDescription>{MPercent}%/100%</CardDescription>
               </div>
-              <Progress value={memoryPerc} />
+              <Progress value={MPercent} />
             </CardHeader>
             <CardContent>
               <p>Total capacity: {totalMemory} GB</p>
               <p>Current usage: {usedMemory} GB</p>
             </CardContent>
-            <CardFooter className="flex justify-between">
-              
-            </CardFooter>
           </Card>
 
           <Card className="w-[350px]">
             <CardHeader>
               <CardTitle> <span className="text-blue-500">[CPU]</span> Usage</CardTitle>
-              <CardDescription>31%/100%</CardDescription>
             </CardHeader>
             <CardContent>
-              <p>Used capacity: {cpu} GB</p>
+              <p>Used capacity: <b className="text-blue-600">{cpu}</b> GB</p>
             </CardContent>
-            <CardFooter className="flex justify-between">
-              
-            </CardFooter>
           </Card>
-
-          {/* <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead className="w-[200px]">Status</TableHead>
-                <TableHead className="w-[150px]">Created</TableHead>
-                <TableHead>Last used</TableHead>
-                <TableHead>Location</TableHead>
-                <TableHead>Type</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              <TableRow>
-                <TableCell className={statusClass}>{server.status}</TableCell>
-                <TableCell>{createdAtResult}</TableCell>
-                <TableCell>{usedAtResult}</TableCell>
-                <TableCell>{server.location}</TableCell>
-                <TableCell>{server.type}</TableCell>
-              </TableRow>
-            </TableBody>
-          </Table> */}
         </div>
 
+        <Separator />
+
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-[120px]">Created</TableHead>
+              <TableHead>Last used</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            <TableRow>
+              <TableCell>{createdAtResult}</TableCell>
+              <TableCell>{usedAtResult}</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
       </div>
     </>
   );
