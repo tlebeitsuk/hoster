@@ -24,10 +24,8 @@ export default function Component({params}) {
   const projects = params.projects
   const projectID = params.projectID
   
-  console.log(params.projects);
-  // const thisProject = projects.find(x => x.id === projectID);
-  // console.log(thisProject);
-  
+  const thisProject = projects.find((p) => p.id === Number(projectID));
+  console.log(thisProject);
 
   return (
     <Card className="w-full rounded-none">
