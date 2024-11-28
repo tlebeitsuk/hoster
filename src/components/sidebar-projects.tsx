@@ -18,7 +18,7 @@ export default function Projects({
 	}[]
 }) {
 	return (
-		<SidebarGroup className="group-data-[collapsible=icon]:hidden">
+		<SidebarGroup className="group-data-[collapsible=icon]:hidden pt-0">
 			<SidebarGroupLabel>Projects</SidebarGroupLabel>
 			<SidebarMenu>
 				{projects.map(item => (

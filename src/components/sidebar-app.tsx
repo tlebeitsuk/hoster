@@ -7,12 +7,16 @@ import {
 } from '@/components/ui/sidebar'
 import Projects from '@/components/sidebar-projects'
 import { getProjects} from '@/data/projects/get-projects'
+import Link from 'next/link';
 
 export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const projects = await getProjects();
 	return (
 		<Sidebar {...props}>
 			<SidebarContent>
+				<Link href="/" className='flex items-center px-4 h-16 border-b border-[hsl(var(--border))] bg-background'>
+					<img src="/logo.svg" alt="Hostess" className='w-36' />
+				</Link>
 				<Projects projects={projects} />
 			</SidebarContent>
 			<SidebarFooter>

@@ -6,9 +6,9 @@ export default function Home() {
 	return (
 		<>
 			<header className="flex justify-between items-center py-4 px-8 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 sticky top-0 w-full border-b">
-				<nav className="flex gap-6 items-center">
-					<span className="text-lg font-bold">Hoster</span>
-				</nav>
+				<Link href="/">
+            		<img src="/logo.svg" alt="Hostess" className="w-36" />
+         		</Link>
 				<div>
 					<Button asChild variant="link" className="px-0">
 						<Link href="/login">Login</Link>
@@ -25,7 +25,7 @@ export default function Home() {
 							</h1>
 							<p className="mt-2 mx-auto max-w-[700px] text-muted-foreground text-lg md:text-xl">
 								Launch your projects with lightning-fast servers and seamless hosting
-								solutions. Scale your ideas with Hoster.
+								solutions. Scale your ideas with Hostess.
 							</p>
 						</div>
 						<Button asChild size="lg">
@@ -36,7 +36,7 @@ export default function Home() {
 			</div>
 			<footer className="flex items-center justify-between py-4 px-8 border-t">
 				<p className="text-xs text-muted-foreground">
-					&copy; 2024 Hoster. All rights reserved.
+					&copy; 2024 Hostess. All rights reserved.
 				</p>
 				<ThemeToggle />
 			</footer>
