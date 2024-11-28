@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/table"
 import { formatDistanceToNow } from "date-fns";
 import ToggleServerStatus from "@/components/toggle-server-status";
+import DeleteServerButton from "@/components/delete-server-button";
 
 type PageByIdProps = {
   params: {
@@ -64,6 +65,11 @@ export default async function InstancePage({ params }: PageByIdProps) {
                 <TableCell>{usedAtResult}</TableCell>
                 <TableCell>{server.location}</TableCell>
                 <TableCell>{server.type}</TableCell>
+                <TableCell>
+                  <DeleteServerButton 
+                    server={{ name: server.name, projectId }} 
+                  />
+                </TableCell>
               </TableRow>
             </TableBody>
           </Table>
