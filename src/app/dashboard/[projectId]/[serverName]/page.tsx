@@ -23,9 +23,26 @@ import {
 import { Progress } from '@/components/ui/progress'
 import { formatDistanceToNow } from 'date-fns'
 import { Separator } from '@/components/ui/separator'
-import ServerStatusIcon from '@/components/server-status'
 import { unstable_noStore as noStore } from 'next/cache'
 import ToggleServerStatus from '@/components/toggle-server-status'
+import { ServerCog } from 'lucide-react'
+
+interface Server {
+  id: string
+  status: 'Running' | 'Stopped'
+  created_at: Date
+  last_used_at: Date
+  name: string
+  state?: {
+    memory: {
+      total: number
+      usage: number
+    }
+    cpu: {
+      usage: number
+    }
+  }
+}
 
 type PageByIdProps = {
   params: {
@@ -38,7 +55,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
   noStore()
   const { projectId, serverName } = params
   const servers = await getServers(projectId)
-  const server = servers.find((s: any) => s.name === serverName)
+  const server = servers.find((s: Server) => s.name === serverName)
 
   const statusClass =
     server?.status === 'Running' ? 'text-green-500' : 'text-red-500'
@@ -70,7 +87,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <ServerStatusIcon params={statusClass} />
+                <ServerCog className={statusClass} />
               </TooltipTrigger>
               <TooltipContent>
                 <p>Server is {server.status}.</p>
