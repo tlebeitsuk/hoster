@@ -12,6 +12,7 @@ import { formatDistanceToNow } from 'date-fns'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { unstable_noStore as noStore } from 'next/cache'
+import { getProjects } from '@/data/projects/get-projects'
 
 export default async function ProjectPage({
   params,
@@ -21,12 +22,18 @@ export default async function ProjectPage({
   noStore()
   const projectId = (await params).projectId
   const servers = await getServers(projectId)
+  const project = await getProjects(Number(projectId))
 
   return (
     <>
       <div className="p-4">
         <div className="flex items-center justify-between">
-          <p>Project</p>
+          <div>
+            <h1 className="text-xl">{project?.title}</h1>
+            <p className="dark:text-gray-400 text-gray-600">
+              {project?.description}
+            </p>
+          </div>
           <div className="flex items-center gap-2">
             <Button size="sm" variant="outline" asChild>
               <Link href={`/dashboard/${projectId}/settings`}>Settings</Link>
