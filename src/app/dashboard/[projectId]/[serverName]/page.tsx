@@ -134,7 +134,9 @@ export default async function InstancePage({ params }: PageByIdProps) {
                 />
               </TableCell>
               <TableCell>{createdAtResult}</TableCell>
-              <TableCell>{usedAtResult}</TableCell>
+              <TableCell>
+                {new Date(server.last_used_at).getTime() ? usedAtResult : ''}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>
