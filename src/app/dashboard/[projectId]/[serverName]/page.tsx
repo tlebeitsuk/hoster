@@ -98,7 +98,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
               <CardTitle> <span className="text-blue-500">[CPU]</span> Usage</CardTitle>
             </CardHeader>
             <CardContent>
-              <p>Used capacity: <b className="text-blue-600">{cpu}</b> GB</p>
+              <p>Used capacity: <b className="text-blue-600">{cpu}</b> %</p>
             </CardContent>
           </Card>
         </div>
