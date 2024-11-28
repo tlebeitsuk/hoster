@@ -24,6 +24,8 @@ import { Progress } from '@/components/ui/progress'
 import { formatDistanceToNow } from 'date-fns'
 import { Separator } from '@/components/ui/separator'
 import ServerStatusIcon from '@/components/server-status'
+import { unstable_noStore as noStore } from 'next/cache'
+import ToggleServerStatus from '@/components/toggle-server-status'
 
 type PageByIdProps = {
   params: {
@@ -33,9 +35,10 @@ type PageByIdProps = {
 }
 
 export default async function InstancePage({ params }: PageByIdProps) {
+  noStore()
   const { projectId, serverName } = params
   const servers = await getServers(projectId)
-  const server = servers.find((s) => s.name === serverName)
+  const server = servers.find((s: any) => s.name === serverName)
 
   const statusClass =
     server?.status === 'Running' ? 'text-green-500' : 'text-red-500'
@@ -99,7 +102,6 @@ export default async function InstancePage({ params }: PageByIdProps) {
           <Card className="w-[350px]">
             <CardHeader>
               <CardTitle>
-                {' '}
                 <span className="text-blue-500">[CPU]</span> Usage
               </CardTitle>
             </CardHeader>
@@ -111,17 +113,26 @@ export default async function InstancePage({ params }: PageByIdProps) {
           </Card>
         </div>
 
-        <Separator />
-
         <Table>
           <TableHeader>
             <TableRow>
-              <TableHead className="w-[120px]">Created</TableHead>
+              <TableHead className="w-[120px]">Status</TableHead>
+              <TableHead>Created</TableHead>
               <TableHead>Last used</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
+              <TableCell className={statusClass}>
+                <ToggleServerStatus
+                  server={{
+                    name: server.name,
+                    status: server.status,
+                    projectId,
+                  }}
+                  statusClass={statusClass}
+                />
+              </TableCell>
               <TableCell>{createdAtResult}</TableCell>
               <TableCell>{usedAtResult}</TableCell>
             </TableRow>
