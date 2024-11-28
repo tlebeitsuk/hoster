@@ -1,4 +1,4 @@
-import { getServers } from "@/data/projects/get-servers";
+import { getServers } from '@/data/projects/get-servers'
 import {
   Table,
   TableBody,
@@ -6,58 +6,59 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from '@/components/ui/table'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from '@/components/ui/tooltip'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { formatDistanceToNow } from "date-fns";
-import { Separator } from "@/components/ui/separator";
-import ServerStatusIcon from "@/components/server-status"
+} from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
+import { formatDistanceToNow } from 'date-fns'
+import { Separator } from '@/components/ui/separator'
+import ServerStatusIcon from '@/components/server-status'
 
 type PageByIdProps = {
   params: {
-    projectId: string;
-    serverName: string;
-  };
-};
+    projectId: string
+    serverName: string
+  }
+}
 
 export default async function InstancePage({ params }: PageByIdProps) {
-  const { projectId, serverName } = params;
-  const servers = await getServers(projectId);
-  const server = servers.find((s) => s.name === serverName);
+  const { projectId, serverName } = params
+  const servers = await getServers(projectId)
+  const server = servers.find((s) => s.name === serverName)
 
-  const statusClass = server.status === "Running" ? "text-green-500" : "text-red-500";
+  const statusClass =
+    server?.status === 'Running' ? 'text-green-500' : 'text-red-500'
 
-  const memory = server.state.memory
-  const totalMemory = Math.round((memory.total / 1000000000) * 10) / 10
-  const usedMemory = Math.round((memory.usage / 1000000000) * 10) / 10
-  const cpu = Math.round((server.state.cpu.usage / 1000000000) * 10) / 10
+  const memory = server?.state?.memory
+  const totalMemory = Math.round((memory?.total / 1000000000) * 10) / 10
+  const usedMemory = Math.round((memory?.usage / 1000000000) * 10) / 10
+  const cpu = Math.round((server?.state?.cpu.usage / 1000000000) * 10) / 10
 
   const memoryPercentage = usedMemory / (totalMemory / 100)
   const MPercent = parseFloat(memoryPercentage.toFixed(1))
 
   if (!server) {
-    return <div>Server not found</div>;
+    return <div className="p-4">Server not found</div>
   }
 
-  const createdAtResult = formatDistanceToNow(
-    server.created_at
-  ,{ addSuffix: true });
+  const createdAtResult = formatDistanceToNow(server.created_at, {
+    addSuffix: true,
+  })
 
-  const usedAtResult = formatDistanceToNow(
-    server.last_used_at
-  ,{ addSuffix: true });
+  const usedAtResult = formatDistanceToNow(server.last_used_at, {
+    addSuffix: true,
+  })
 
   return (
     <>
@@ -75,13 +76,15 @@ export default async function InstancePage({ params }: PageByIdProps) {
           </TooltipProvider>
           <h1 className="font-medium text-xl">{serverName}</h1>
         </div>
-        
+
         <Separator />
 
         <div className="p-3 flex gap-5">
           <Card className="w-[350px]">
             <CardHeader>
-              <CardTitle>Memory <span className="text-green-500">[RAM]</span></CardTitle>
+              <CardTitle>
+                Memory <span className="text-green-500">[RAM]</span>
+              </CardTitle>
               <div className="flex justify-end">
                 <CardDescription>{MPercent}%/100%</CardDescription>
               </div>
@@ -95,10 +98,15 @@ export default async function InstancePage({ params }: PageByIdProps) {
 
           <Card className="w-[350px]">
             <CardHeader>
-              <CardTitle> <span className="text-blue-500">[CPU]</span> Usage</CardTitle>
+              <CardTitle>
+                {' '}
+                <span className="text-blue-500">[CPU]</span> Usage
+              </CardTitle>
             </CardHeader>
             <CardContent>
-              <p>Used capacity: <b className="text-blue-600">{cpu}</b> %</p>
+              <p>
+                Used capacity: <b className="text-blue-600">{cpu}</b> %
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -121,6 +129,5 @@ export default async function InstancePage({ params }: PageByIdProps) {
         </Table>
       </div>
     </>
-  );
+  )
 }
-
