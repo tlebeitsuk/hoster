@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
-import { newServer } from '@/data/projects/new-server'
-import { toast } from 'sonner'
+import { useState } from "react"
+import { useRouter } from "next/navigation"
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { newServer } from "@/data/projects/new-server"
+import { toast } from "sonner"
 
 export default function NewServer({ projectId }: { projectId: string }) {
   const router = useRouter()
-  const [name, setName] = useState('')
+  const [name, setName] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,17 +21,19 @@ export default function NewServer({ projectId }: { projectId: string }) {
       const config = {
         name,
         source: {
-          type: 'image',
-          alias: 'ubuntu/22.04',
+          type: "image",
+          protocol: "simplestreams",
+          server: "https://images.linuxcontainers.org",
+          alias: "ubuntu/22.04",
         },
       }
 
       await newServer(projectId, config)
-      toast.success('Server created successfully')
+      toast.success("Server created successfully")
       router.push(`/dashboard/${projectId}`)
     } catch (error) {
-      console.error('Error:', error)
-      toast.error('Failed to create server')
+      console.error("Error:", error)
+      toast.error("Failed to create server")
     } finally {
       setIsLoading(false)
     }
@@ -62,7 +64,7 @@ export default function NewServer({ projectId }: { projectId: string }) {
           </div>
 
           <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Creating...' : 'Create Server'}
+            {isLoading ? "Creating..." : "Create Server"}
           </Button>
         </form>
       </div>
