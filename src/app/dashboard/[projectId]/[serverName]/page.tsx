@@ -9,6 +9,8 @@ import {
 } from '@/components/ui/table'
 import { formatDistanceToNow } from 'date-fns'
 import { unstable_noStore as noStore } from 'next/cache'
+import ToggleServerStatus from '@/components/toggle-server-status'
+
 type PageByIdProps = {
   params: {
     projectId: string
@@ -55,7 +57,16 @@ export default async function InstancePage({ params }: PageByIdProps) {
             </TableHeader>
             <TableBody>
               <TableRow>
-                <TableCell className={statusClass}>{server.status}</TableCell>
+                <TableCell className={statusClass}>
+                  <ToggleServerStatus
+                    server={{
+                      name: server.name,
+                      status: server.status,
+                      projectId,
+                    }}
+                    statusClass={statusClass}
+                  />
+                </TableCell>
                 <TableCell>{createdAtResult}</TableCell>
                 <TableCell>{usedAtResult}</TableCell>
                 <TableCell>{server.location}</TableCell>
