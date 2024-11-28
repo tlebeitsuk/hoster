@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { Button } from './ui/button';
 import { deleteServer } from '@/data/projects/delete-server';
@@ -8,11 +9,17 @@ type DeleteServerProps = {
   server: {
     name: string;
     projectId: string;
+    status: string;
   };
 };
 
 export default function DeleteServerButton({ server }: DeleteServerProps) {
+  const router = useRouter();
   const [isDeleting, setIsDeleting] = useState(false);
+
+  const serverStatusIsRunning = () => {
+    return server.status === 'Running';
+  };
 
   const handleDeleteServer = async () => {
     if (isDeleting) return;
@@ -20,8 +27,7 @@ export default function DeleteServerButton({ server }: DeleteServerProps) {
     setIsDeleting(true);
     try {
       await deleteServer(server.projectId, server.name);
-      
-      window.location.href = `/projects/${server.projectId}/servers`;
+      router.back();
     } catch (error) {
       console.error('Failed to delete server:', error);
       alert('An error occurred while deleting the server.');
@@ -36,7 +42,7 @@ export default function DeleteServerButton({ server }: DeleteServerProps) {
       className={`cursor-pointer bg-red-500 ${
         isDeleting ? 'opacity-50 cursor-not-allowed' : ''
       }`}
-      disabled={isDeleting}
+      disabled={serverStatusIsRunning() || isDeleting}
       title={isDeleting ? 'Deleting...' : 'Click to delete server'}
     >
       {isDeleting ? 'Deleting...' : 'Delete Server'}

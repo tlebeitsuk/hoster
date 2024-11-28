@@ -137,9 +137,13 @@ export default async function InstancePage({ params }: PageByIdProps) {
               <TableCell>{createdAtResult}</TableCell>
               <TableCell>{usedAtResult}</TableCell>
                 <TableCell>
-                  <DeleteServerButton 
-                    server={{ name: server.name, projectId }} 
-                  />
+                <DeleteServerButton 
+                  server={{
+                    name: server.name,
+                    projectId,
+                    status: server.status,
+                  }}
+                />
                 </TableCell>
             </TableRow>
           </TableBody>

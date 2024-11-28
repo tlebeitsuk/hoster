@@ -1,5 +1,6 @@
 'use server';
 import { callIncus } from '../../lib/incus';
+import { revalidatePath } from 'next/cache';
 
 export const deleteServer = async (projectId: string, serverName: string) => {
   try {
@@ -7,6 +8,9 @@ export const deleteServer = async (projectId: string, serverName: string) => {
       method: 'DELETE',
       query: { project: projectId },
     });
+
+    revalidatePath(`/dashboard/${projectId}`);
+
     return response;
   } catch (error) {
     console.error('Failed to delete server:', error);
