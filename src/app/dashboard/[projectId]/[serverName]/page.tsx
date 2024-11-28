@@ -1,4 +1,4 @@
-import { getServers } from "@/data/projects/get-servers";
+import { getServers } from '@/data/projects/get-servers'
 import {
   Table,
   TableBody,
@@ -6,35 +6,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
-import { formatDistanceToNow } from "date-fns";
-
+} from '@/components/ui/table'
+import { formatDistanceToNow } from 'date-fns'
+import { unstable_noStore as noStore } from 'next/cache'
 type PageByIdProps = {
   params: {
-    projectId: string;
-    serverName: string;
-  };
-};
+    projectId: string
+    serverName: string
+  }
+}
 
 export default async function InstancePage({ params }: PageByIdProps) {
-  const { projectId, serverName } = params;
-  const servers = await getServers(projectId);
-  
-  const server = servers.find((s) => s.name === serverName);
+  noStore()
+  const { projectId, serverName } = params
+  const servers = await getServers(projectId)
+
+  const server = servers.find((s) => s.name === serverName)
 
   if (!server) {
-    return <div>Server not found</div>;
+    return <div>Server not found</div>
   }
 
-  const statusClass = server.status === "Running" ? "text-green-500" : "text-red-500";
+  const statusClass =
+    server.status === 'Running' ? 'text-green-500' : 'text-red-500'
 
-  const createdAtResult = formatDistanceToNow(
-    server.created_at
-  ,{ addSuffix: true });
+  const createdAtResult = formatDistanceToNow(server.created_at, {
+    addSuffix: true,
+  })
 
-  const usedAtResult = formatDistanceToNow(
-    server.last_used_at
-  ,{ addSuffix: true });
+  const usedAtResult = formatDistanceToNow(server.last_used_at, {
+    addSuffix: true,
+  })
 
   return (
     <>
@@ -64,5 +66,5 @@ export default async function InstancePage({ params }: PageByIdProps) {
         </div>
       </div>
     </>
-  );
+  )
 }
