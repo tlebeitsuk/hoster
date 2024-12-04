@@ -86,7 +86,11 @@ export default async function ProjectPage({
                       {server.status}
                     </TableCell>
                     <TableCell className="w-[25%]">{createdAtResult}</TableCell>
-                    <TableCell className="w-[25%]">{usedAtResult}</TableCell>
+                    <TableCell className="w-[25%]">
+                        {new Date(server.last_used_at).getTime()
+                          ? usedAtResult
+                          : ''}
+                      </TableCell>
                   </TableRow>
                 )
               })}
