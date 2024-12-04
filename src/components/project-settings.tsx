@@ -32,7 +32,7 @@ export default function Component({ params }) {
   const projectID = params.projectID
   const thisProject = projects.find((p) => p.id === Number(projectID))
   
-  console.log(thisProject)
+  console.log(thisProject);
 
   const handleClick = async () => {
     if (!newName.trim() && !newDescription.trim()) { 
