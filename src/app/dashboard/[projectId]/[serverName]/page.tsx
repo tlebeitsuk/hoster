@@ -23,12 +23,29 @@ import {
 import { Progress } from '@/components/ui/progress'
 import { formatDistanceToNow } from 'date-fns'
 import { Separator } from '@/components/ui/separator'
-import ServerStatusIcon from '@/components/server-status'
 import { unstable_noStore as noStore } from 'next/cache'
 import ToggleServerStatus from '@/components/toggle-server-status'
-import DeleteServerButton from "@/components/delete-server-button";
+import { ServerCog } from 'lucide-react'
+import DeleteServerButton from '@/components/delete-server-button'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+interface Server {
+  id: string
+  status: 'Running' | 'Stopped'
+  created_at: Date
+  last_used_at: Date
+  name: string
+  state?: {
+    memory: {
+      total: number
+      usage: number
+    }
+    cpu: {
+      usage: number
+    }
+  }
+}
+
 type PageByIdProps = {
   params: {
     projectId: string
@@ -40,7 +57,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
   noStore()
   const { projectId, serverName } = params
   const servers = await getServers(projectId)
-  const server = servers.find((s: any) => s.name === serverName)
+  const server = servers.find((s: Server) => s.name === serverName)
 
   const statusClass =
     server?.status === 'Running' ? 'text-green-500' : 'text-red-500'
@@ -52,6 +69,8 @@ export default async function InstancePage({ params }: PageByIdProps) {
 
   const memoryPercentage = usedMemory / (totalMemory / 100)
   const MPercent = parseFloat(memoryPercentage.toFixed(1))
+
+  const ip = server?.state?.network?.lo?.addresses[0]?.address
 
   if (!server) {
     return <div className="p-4">Server not found</div>
@@ -73,7 +92,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger>
-                  <ServerStatusIcon params={statusClass} />
+                  <ServerCog className={statusClass} />
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>Server is {server.status}.</p>
@@ -83,7 +102,9 @@ export default async function InstancePage({ params }: PageByIdProps) {
             <h1 className="font-medium text-xl">{serverName}</h1>
           </div>
           <Button size="sm" variant="outline" asChild>
-            <Link href={`/dashboard/${projectId}/${serverName}/settings`}>Settings</Link>
+            <Link href={`/dashboard/${projectId}/${serverName}/settings`}>
+              Settings
+            </Link>
           </Button>
         </div>
 
@@ -124,6 +145,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[120px]">Status</TableHead>
+              <TableHead className="w-[120px]">IP</TableHead>
               <TableHead>Created</TableHead>
               <TableHead>Last used</TableHead>
             </TableRow>
@@ -140,8 +162,11 @@ export default async function InstancePage({ params }: PageByIdProps) {
                   statusClass={statusClass}
                 />
               </TableCell>
+              <TableCell>{ip}</TableCell>
               <TableCell>{createdAtResult}</TableCell>
-              <TableCell>{usedAtResult}</TableCell>
+              <TableCell>
+                {new Date(server.last_used_at).getTime() ? usedAtResult : ''}
+              </TableCell>
             </TableRow>
           </TableBody>
         </Table>

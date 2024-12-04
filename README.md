@@ -1,5 +1,7 @@
-# hoster
+# Hostess
 Platform var man kan skapa och använda resurser för sina appar. Ledorden är användarvändligt och anpassningsbart.
+
+Utbilningsmaterial för [programutvecklare på Optima](https://optimaedu.fi/sv/studier/programutvecklare/).
 
 ## Teknik
 - Next.js

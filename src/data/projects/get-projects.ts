@@ -3,7 +3,7 @@ import { auth } from '@/lib/auth';
 import prisma from '@/lib/prisma';
 import { headers } from 'next/headers';
 
-export const getProjects = async () => {
+export const getProjects = async (projectId?: number) => {
   try {
     const session = await auth.api.getSession({
       headers: headers(),
@@ -14,16 +14,18 @@ export const getProjects = async () => {
     }
 
     const userId = session.user.id;
-    const projects = await prisma.project.findMany({
-      where: {
-        userId: userId
-      },
-      select: {
-        id: true,
-        title: true
-
-      }
-    });
+    const projects = projectId
+      ? await prisma.project.findUnique({
+        where: {
+          id: projectId,
+          userId: userId
+        },
+      })
+      : await prisma.project.findMany({
+        where: {
+          userId: userId
+        },
+      });
 
     return projects;
   } catch (error) {
