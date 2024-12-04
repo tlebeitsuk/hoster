@@ -27,7 +27,8 @@ import ServerStatusIcon from '@/components/server-status'
 import { unstable_noStore as noStore } from 'next/cache'
 import ToggleServerStatus from '@/components/toggle-server-status'
 import DeleteServerButton from "@/components/delete-server-button";
-
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 type PageByIdProps = {
   params: {
     projectId: string
@@ -67,18 +68,23 @@ export default async function InstancePage({ params }: PageByIdProps) {
   return (
     <>
       <div className="flex flex-wrap m-5 flex-col gap-5">
-        <div className="flex gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <ServerStatusIcon params={statusClass} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Server is {server.status}.</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <h1 className="font-medium text-xl">{serverName}</h1>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex gap-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <ServerStatusIcon params={statusClass} />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Server is {server.status}.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <h1 className="font-medium text-xl">{serverName}</h1>
+          </div>
+          <Button size="sm" variant="outline" asChild>
+            <Link href={`/dashboard/${projectId}/${serverName}/settings`}>Settings</Link>
+          </Button>
         </div>
 
         <Separator />
@@ -136,15 +142,6 @@ export default async function InstancePage({ params }: PageByIdProps) {
               </TableCell>
               <TableCell>{createdAtResult}</TableCell>
               <TableCell>{usedAtResult}</TableCell>
-                <TableCell>
-                <DeleteServerButton 
-                  server={{
-                    name: server.name,
-                    projectId,
-                    status: server.status,
-                  }}
-                />
-                </TableCell>
             </TableRow>
           </TableBody>
         </Table>
