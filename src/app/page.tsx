@@ -1,5 +1,6 @@
 import { ThemeToggle } from '@/components/theme-toggle'
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 import Link from 'next/link'
 
 export default function Home() {
@@ -7,7 +8,7 @@ export default function Home() {
 		<>
 			<header className="flex justify-between items-center py-4 px-8 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 z-50 sticky top-0 w-full border-b">
 				<Link href="/">
-            		<img src="/logo.svg" alt="Hostess" className="w-36" />
+            		<Image src="/logo.svg" alt="Hostess" height={144} width={144} className="w-36" />
          		</Link>
 				<div>
 					<Button asChild variant="link" className="px-0">

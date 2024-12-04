@@ -8,6 +8,7 @@ import {
 import Projects from '@/components/sidebar-projects'
 import { getProjects} from '@/data/projects/get-projects'
 import Link from 'next/link';
+import Image from 'next/image';
 
 export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 	const projects = await getProjects();
@@ -15,7 +16,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
 		<Sidebar {...props}>
 			<SidebarContent>
 				<Link href="/dashboard" className='flex items-center px-4 py-6 h-16 border-b border-border bg-background'>
-					<img src="/logo.svg" alt="Hostess" className='w-36' />
+					<Image src="/logo.svg" alt="Hostess" height={144} width={144} className='w-36' />
 				</Link>
 				<Projects projects={projects} />
 			</SidebarContent>
