@@ -18,41 +18,55 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { useRouter } from 'next/navigation'
 import { Textarea } from './ui/textarea'
-import { renameProject } from '@/data/projects/rename-project'
+import { changeProjectDescription, renameProject } from '@/data/projects/rename-project'
 
-export default function Component({params}) {
+export default function Component({ params }) {
   const [newName, setNewName] = useState('')
   const [newDescription, setNewDescription] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
   const router = useRouter()
   
-  console.log(params);
-
   const projects = params.projects
   const projectID = params.projectID
-  const thisProject = projects.find((p) => p.id === Number(projectID));
+  const thisProject = projects.find((p) => p.id === Number(projectID))
   
-  console.log(thisProject);
+  console.log(thisProject)
 
-  const handleRenameProject = async () => {
-    if (!newName.trim()) {
-      setErrorMessage('Project name cannot be empty.');
+  const handleClick = async () => {
+    if (!newName.trim() && !newDescription.trim()) { 
+      setErrorMessage('There are no changes to be saved.')
       return;
     }
-  
-    setIsSaving(true);
-    setErrorMessage('');
+
+    setIsSaving(true)
+    setErrorMessage('')
+    setSuccessMessage('')
+    
     try {
-      const updatedProject = await renameProject(Number(projectID), newName)
-      console.log('Project renamed successfully:', updatedProject)
+      if(newName.trim() && newDescription.trim()){
+        const changedName = await renameProject(Number(projectID), newName)
+        const changedDescription = await changeProjectDescription(Number(projectID), newDescription)
+        setSuccessMessage('Updated successfully!' + changedName.title + changedDescription.description)
+
+      } else if(newName.trim()) {
+        const changes = await renameProject(Number(projectID), newName)
+        setSuccessMessage('Updated project!' + changes.title)
+
+      } else if(newDescription.trim()) {
+        const changes = await changeProjectDescription(Number(projectID), newDescription)
+        setSuccessMessage('Updated successfully!' + changes.description)
+      }
+
       setNewName('')
+      setNewDescription('')
       router.refresh()
-  
+
     } catch (error: any) {
-      setErrorMessage(error.message || 'Failed to rename project.')
+      setErrorMessage(error.message || 'Failed to save changes.')
     } finally {
-      setIsSaving(false);
+      setIsSaving(false)
     }
   }
 
@@ -70,17 +84,17 @@ export default function Component({params}) {
           >
             <span className="inline-flex bg-background px-2">
               Project Name
-             </span>
-            </label>
-            <Input
-              id="projectName"
-              type="text"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              placeholder=""
-              className="w-full"
-            />
-          </div>
+            </span>
+          </label>
+          <Input
+            id="projectName"
+            type="text"
+            value={newName}
+            onChange={(e) => setNewName(e.target.value)}
+            placeholder=""
+            className="w-full"
+          />
+        </div>
         <div className="group relative flex-grow">
           <label
             htmlFor="projectDescription"
@@ -98,7 +112,10 @@ export default function Component({params}) {
             className="w-full"
           />
         </div>
-        <Button onClick={handleRenameProject} disabled={isSaving} className='self-start'>
+        {successMessage && (
+        <p className="text-green-500 text-sm mt-2">{successMessage}</p>
+        )}
+        <Button onClick={handleClick} disabled={isSaving} className='self-start'>
           <Save className="mr-2 size-4" />
           {isSaving ? 'Saving...' : 'Save Changes'}
         </Button>
