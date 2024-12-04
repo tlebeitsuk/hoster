@@ -78,27 +78,27 @@ export default async function ProjectPage({
                   addSuffix: true,
                 })
 
-                const serverName = server.name
                 return (
-                  <TableRow key={`${serverName}`}>
-                    <TableCell>
-                      <Link
-                        href={'/dashboard/' + projectId + '/' + serverName}
-                        className="font-medium hover:underline w-[25%]"
-                      >
-                        {serverName}
-                      </Link>
-                    </TableCell>
-                    <TableCell className={`w-[25%] ${statusClass}`}>
-                      {server.status}
-                    </TableCell>
-                    <TableCell className="w-[25%]">{createdAtResult}</TableCell>
-                    <TableCell className="w-[25%]">
+                  <Link
+                    href={`/dashboard/${projectId}/${server.name}`}
+                    key={server.name}
+                    legacyBehavior
+                  >
+                    <TableRow className="cursor-pointer">
+                      <TableCell className="w-[25%]">{server.name}</TableCell>
+                      <TableCell className={`w-[25%] ${statusClass}`}>
+                        {server.status}
+                      </TableCell>
+                      <TableCell className="w-[25%]">
+                        {createdAtResult}
+                      </TableCell>
+                      <TableCell className="w-[25%]">
                         {new Date(server.last_used_at).getTime()
                           ? usedAtResult
                           : ''}
                       </TableCell>
-                  </TableRow>
+                    </TableRow>
+                  </Link>
                 )
               })}
             </TableBody>
