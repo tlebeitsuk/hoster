@@ -17,17 +17,45 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from './ui/textarea'
+import { renameProject } from '@/data/projects/rename-project'
+import { useRouter } from 'next/navigation'
 
 export default function Component({ params }) {
   const [newName, setNewName] = useState('')
   const [newDescription, setNewDescription] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
+  const router = useRouter()
 
   console.log(params)
   const projects = params.projects
   const projectID = params.projectID
-
   const thisProject = projects.find((p) => p.id === Number(projectID))
+
   console.log(thisProject)
+
+  const handleRenameProject = async () => {
+    if (!newName.trim()) {
+      setErrorMessage('Project name cannot be empty.');
+      return;
+    }
+  
+    setIsSaving(true);
+    setErrorMessage('');
+    try {
+      const updatedProject = await renameProject(Number(projectID), newName)
+      console.log('Project renamed successfully:', updatedProject)
+      setNewName('')
+      router.refresh()
+  
+    } catch (error: any) {
+      setErrorMessage(error.message || 'Failed to rename project.')
+    } finally {
+      setIsSaving(false);
+    }
+  }
+
+
 
   return (
     <Card className="w-full rounded-none">
@@ -69,11 +97,15 @@ export default function Component({ params }) {
               className="w-full"
             />
           </div>
-          <Button className="self-start">
-            <Save className="mr-2 size-4" />
-            Save Changes
-          </Button>
+          <Button onClick={handleRenameProject} disabled={isSaving}>
+              <Save className="mr-2 size-4" />
+              {isSaving ? 'Saving...' : 'Save Changes'}
+            </Button>
         </div>
+        {errorMessage && (
+          <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+        )}
+        
         <Separator />
         <div>
           <h3 className="text-lg font-semibold mb-2">Remove Project</h3>
