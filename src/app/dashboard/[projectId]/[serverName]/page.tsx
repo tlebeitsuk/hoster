@@ -26,6 +26,7 @@ import { Separator } from '@/components/ui/separator'
 import { unstable_noStore as noStore } from 'next/cache'
 import ToggleServerStatus from '@/components/toggle-server-status'
 import { ServerCog } from 'lucide-react'
+import DeleteServerButton from "@/components/delete-server-button";
 
 interface Server {
   id: string
@@ -152,6 +153,15 @@ export default async function InstancePage({ params }: PageByIdProps) {
               </TableCell>
               <TableCell>{createdAtResult}</TableCell>
               <TableCell>{usedAtResult}</TableCell>
+                <TableCell>
+                <DeleteServerButton 
+                  server={{
+                    name: server.name,
+                    projectId,
+                    status: server.status,
+                  }}
+                />
+                </TableCell>
             </TableRow>
           </TableBody>
         </Table>
