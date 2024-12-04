@@ -16,42 +16,71 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Separator } from '@/components/ui/separator'
+import { useRouter } from 'next/navigation'
+import { renameProject } from '@/data/projects/rename-project'
 import { Textarea } from './ui/textarea'
 
 export default function Component({ params }) {
   const [newName, setNewName] = useState('')
+  const [isSaving, setIsSaving] = useState(false)
+  const [errorMessage, setErrorMessage] = useState('')
   const [newDescription, setNewDescription] = useState('')
+  const router = useRouter()
+  
+  console.log(params);
 
-  console.log(params)
   const projects = params.projects
   const projectID = params.projectID
+  const thisProject = projects.find((p) => p.id === Number(projectID));
+  
+  console.log(thisProject);
 
-  const thisProject = projects.find((p) => p.id === Number(projectID))
-  console.log(thisProject)
+  const handleRenameProject = async () => {
+    if (!newName.trim()) {
+      setErrorMessage('Project name cannot be empty.');
+      return;
+    }
+  
+    setIsSaving(true);
+    setErrorMessage('');
+    try {
+      const updatedProject = await renameProject(Number(projectID), newName)
+      console.log('Project renamed successfully:', updatedProject)
+      setNewName('')
+      router.refresh()
+  
+    } catch (error: any) {
+      setErrorMessage(error.message || 'Failed to rename project.')
+    } finally {
+      setIsSaving(false);
+    }
+  }
 
   return (
-    <Card className="w-full rounded-none">
-      <CardHeader>
-        <CardTitle className="text-2xl">Project Settings</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-6">
-        <div className="flex flex-col gap-4">
+      <Card className="w-full rounded-none">
+        <CardHeader>
+          <CardTitle className="text-2xl">Project Settings</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-6">
+         <div className="flex flex-col gap-4">
           <div className="group relative flex-grow">
             <label
               htmlFor="projectName"
               className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground"
             >
-              <span className="inline-flex bg-background px-2">Name</span>
-            </label>
-            <Input
-              id="projectName"
-              type="text"
-              value={newName}
-              onChange={(e) => setNewName(e.target.value)}
-              placeholder=""
-              className="w-full"
-            />
-          </div>
+              <span className="inline-flex bg-background px-2">
+                Project Name
+               </span>
+              </label>
+              <Input
+                id="projectName"
+                type="text"
+                value={newName}
+                onChange={(e) => setNewName(e.target.value)}
+                placeholder=""
+                className="w-full"
+              />
+            </div>
           <div className="group relative flex-grow">
             <label
               htmlFor="projectDescription"
@@ -69,11 +98,14 @@ export default function Component({ params }) {
               className="w-full"
             />
           </div>
-          <Button className="self-start">
+          <Button onClick={handleRenameProject} disabled={isSaving} className='self-start'>
             <Save className="mr-2 size-4" />
-            Save Changes
+            {isSaving ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
+        {errorMessage && (
+          <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+        )}
         <Separator />
         <div>
           <h3 className="text-lg font-semibold mb-2">Remove Project</h3>
