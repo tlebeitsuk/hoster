@@ -17,12 +17,8 @@ export default function ToggleServerStatus({
   statusClass,
 }: ToggleServerProps) {
   const [serverStatus, setServerStatus] = useState(server.status);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleToggleServer = async () => {
-    if (isLoading) return;
-
-    setIsLoading(true);
     try {
       const action = serverStatus === 'Running' ? 'stop' : 'start';
       await toggleServer(server.projectId, server.name, action);
@@ -31,18 +27,16 @@ export default function ToggleServerStatus({
     } catch (error) {
       console.error('Failed to toggle server state:', error);
       alert('An error occurred while changing the server state.');
-    } finally {
-      setIsLoading(false);
     }
   };
 
   return (
     <p
       onClick={handleToggleServer}
-      className={`cursor-pointer ${statusClass} ${isLoading ? 'opacity-50' : ''}`}
-      title={isLoading ? 'Loading...' : 'Click to toggle status'}
+      className={`cursor-pointer ${statusClass}`}
+      title={serverStatus === 'Running' ? 'Click to stop server' : 'Click to start server'}
     >
-      {isLoading ? 'Loading...' : serverStatus}
+      {serverStatus}
     </p>
   );
 }

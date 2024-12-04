@@ -18,11 +18,13 @@ import {
 import { Separator } from '@/components/ui/separator'
 import { useRouter } from 'next/navigation'
 import { renameProject } from '@/data/projects/rename-project'
+import { Textarea } from './ui/textarea'
 
-export default function Component({params}) {
+export default function Component({ params }) {
   const [newName, setNewName] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
+  const [newDescription, setNewDescription] = useState('')
   const router = useRouter()
   
   console.log(params);
@@ -60,17 +62,16 @@ export default function Component({params}) {
         <CardTitle className="text-2xl">Project Settings</CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
-        <div>
-          <h3 className="text-lg font-semibold mb-2">Rename Project</h3>
-          <div className="flex w-full items-center gap-2">
-            <div className="group relative flex-grow">
-              <label
-                htmlFor="projectName"
-                className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground"
-              >
-                <span className="inline-flex bg-background px-2">
-                  Project Name
-                </span>
+         <div className="flex flex-col gap-4">
+          <div className="group relative flex-grow">
+            <label
+              htmlFor="projectName"
+              className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground"
+            >
+
+              <span className="inline-flex bg-background px-2">
+                Project Name
+               </span>
               </label>
               <Input
                 id="projectName"
@@ -89,6 +90,29 @@ export default function Component({params}) {
           {errorMessage && (
             <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
           )}
+         </div>
+          <div className="group relative flex-grow">
+            <label
+              htmlFor="projectDescription"
+              className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground"
+            >
+              <span className="inline-flex bg-background px-2">
+                Description
+              </span>
+            </label>
+            <Textarea
+              id="projectDescription"
+              value={newDescription}
+              onChange={(e) => setNewDescription(e.target.value)}
+              placeholder=""
+              className="w-full"
+            />
+          </div>
+          <Button className="self-start">
+            <Save className="mr-2 size-4" />
+            Save Changes
+          </Button>
+
         </div>
         <Separator />
         <div>
