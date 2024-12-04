@@ -69,6 +69,8 @@ export default async function InstancePage({ params }: PageByIdProps) {
   const memoryPercentage = usedMemory / (totalMemory / 100)
   const MPercent = parseFloat(memoryPercentage.toFixed(1))
 
+  const ip = server?.state?.network?.lo?.addresses[0]?.address
+
   if (!server) {
     return <div className="p-4">Server not found</div>
   }
@@ -135,6 +137,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
           <TableHeader>
             <TableRow>
               <TableHead className="w-[120px]">Status</TableHead>
+              <TableHead className="w-[120px]">IP</TableHead>
               <TableHead>Created</TableHead>
               <TableHead>Last used</TableHead>
             </TableRow>
@@ -151,6 +154,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
                   statusClass={statusClass}
                 />
               </TableCell>
+              <TableCell>{ip}</TableCell>
               <TableCell>{createdAtResult}</TableCell>
               <TableCell>{usedAtResult}</TableCell>
                 <TableCell>
