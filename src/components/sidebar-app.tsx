@@ -14,7 +14,7 @@ export async function AppSidebar({ ...props }: React.ComponentProps<typeof Sideb
 	return (
 		<Sidebar {...props}>
 			<SidebarContent>
-				<Link href="/dashboard" className='flex items-center px-4 h-16 border-b border-[hsl(var(--border))] bg-background'>
+				<Link href="/dashboard" className='flex items-center px-4 py-6 h-16 border-b border-border bg-background'>
 					<img src="/logo.svg" alt="Hostess" className='w-36' />
 				</Link>
 				<Projects projects={projects} />
