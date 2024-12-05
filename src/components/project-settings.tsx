@@ -17,7 +17,7 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Separator } from '@/components/ui/separator'
 import { useRouter } from 'next/navigation'
-import { renameProject } from '@/data/projects/rename-project'
+import { renameProject } from '@/data/projects/project-settings'
 import { Textarea } from './ui/textarea'
 
 export default function Component({ params }) {
