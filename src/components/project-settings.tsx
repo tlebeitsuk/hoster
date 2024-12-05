@@ -32,7 +32,7 @@ export default function Component({ params }) {
   const projectID = params.projectID
   const thisProject = projects.find((p) => p.id === Number(projectID))
   
-  console.log(thisProject)
+  console.log(thisProject);
 
   const handleClick = async () => {
     if (!newName.trim() && !newDescription.trim()) { 
@@ -48,15 +48,15 @@ export default function Component({ params }) {
       if(newName.trim() && newDescription.trim()){
         const changedName = await renameProject(Number(projectID), newName)
         const changedDescription = await changeProjectDescription(Number(projectID), newDescription)
-        setSuccessMessage('Updated successfully!' + changedName.title + changedDescription.description)
+        setSuccessMessage('Updated successfully!')
 
       } else if(newName.trim()) {
         const changes = await renameProject(Number(projectID), newName)
-        setSuccessMessage('Updated project!' + changes.title)
+        setSuccessMessage('Updated project!')
 
       } else if(newDescription.trim()) {
         const changes = await changeProjectDescription(Number(projectID), newDescription)
-        setSuccessMessage('Updated successfully!' + changes.description)
+        setSuccessMessage('Updated successfully!')
       }
 
       setNewName('')
