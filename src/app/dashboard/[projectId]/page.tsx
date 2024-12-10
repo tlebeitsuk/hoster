@@ -61,13 +61,11 @@ export default async function ProjectPage({
             <Button size="sm" variant="outline" asChild>
               <Link href={`/dashboard/${projectId}/settings`}>Settings</Link>
             </Button>
-            {servers.length > 0 ? (
-              <Button size="sm" asChild>
-                <Link href={`/dashboard/${projectId}/server/new`}>
-                  New Server
-                </Link>
-              </Button>
-            ) : null}
+            <Button size="sm" asChild>
+              <Link href={`/dashboard/${projectId}/server/new`}>
+                New Server
+              </Link>
+            </Button>
           </div>
         </div>
 
@@ -131,47 +129,16 @@ export default async function ProjectPage({
             <Separator />
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
-            <Link href={`/dashboard/${projectId}/server/new`}>
-              <Card className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900">
-                <CardHeader>
-                  <CardTitle>New Server</CardTitle>
-                  <CardDescription>
-                    Create a new blank server instance
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-            <Link href={`/dashboard/${projectId}/server/new?template=mysql`}>
-              <Card className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900">
-                <CardHeader>
-                  <CardTitle>MySQL</CardTitle>
-                  <CardDescription>Deploy a MySQL database</CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-            <Link
-              href={`/dashboard/${projectId}/server/new?template=postgresql`}
-            >
-              <Card className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900">
-                <CardHeader>
-                  <CardTitle>PostgreSQL</CardTitle>
-                  <CardDescription>
-                    Deploy a PostgreSQL database
-                  </CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
-            <Link
-              href={`/dashboard/${projectId}/server/new?template=wordpress`}
-            >
-              <Card className="cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-900">
-                <CardHeader>
-                  <CardTitle>WordPress</CardTitle>
-                  <CardDescription>Deploy a WordPress website</CardDescription>
-                </CardHeader>
-              </Card>
-            </Link>
+          <div className="mt-4">
+            <Card className="p-2">
+              <CardHeader>
+                <CardTitle>No servers found</CardTitle>
+              </CardHeader>
+              <CardDescription className="px-6 pb-6">
+                You have not created any servers for this project. Click the
+                button above to create a new server.
+              </CardDescription>
+            </Card>
           </div>
         )}
       </div>
