@@ -6,7 +6,6 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
@@ -16,14 +15,11 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Separator } from '@/components/ui/separator'
+import DeleteServerButton from './delete-server-button'
 
-export default function ServerSettings({ params }: { params: { servers: any[], serverID: string } }) {
+export default function ServerSettings({ params }: { params: { serverName: string, projectId: string } }) {
   const [newServerName, setNewServerName] = useState('')
-  const servers = params.servers
-  const serverID = params.serverID
-
-  const thisServer = servers.find((s) => s.id === Number(serverID))
-  console.log(thisServer)
+  const { projectId, serverName } = params  
 
   return (
     <Card className="w-full rounded-none">
@@ -80,9 +76,12 @@ export default function ServerSettings({ params }: { params: { servers: any[], s
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <Button variant="destructive" asChild>
-                  <AlertDialogAction>Confirm</AlertDialogAction>
-                </Button>
+                  {<DeleteServerButton
+                  server={{
+                    name: serverName,
+                    projectId,
+                  }}
+                /> }
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
