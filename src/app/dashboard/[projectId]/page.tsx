@@ -64,7 +64,7 @@ export default async function ProjectPage({
             {servers.length > 0 ? (
               <Button size="sm" asChild>
                 <Link href={`/dashboard/${projectId}/server/new`}>
-                  New Server
+                  New Service
                 </Link>
               </Button>
             ) : null}
@@ -76,7 +76,7 @@ export default async function ProjectPage({
             <Table>
               <TableHeader className="w-full">
                 <TableRow className="w-full ">
-                  <TableHead className="w-[25%]">Server name</TableHead>
+                  <TableHead className="w-[25%]">Name</TableHead>
                   <TableHead className="w-[25%]">Status</TableHead>
                   <TableHead className="w-[25%]">Created</TableHead>
                   <TableHead className="w-[25%]">Last used</TableHead>
