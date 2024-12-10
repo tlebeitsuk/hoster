@@ -51,9 +51,9 @@ export default function NewServer({ projectId }: { projectId: string }) {
     <div className="flex items-center justify-center pt-12">
       <div className="w-full max-w-md space-y-6">
         <div>
-          <h2 className="text-2xl font-bold text-center">New Server</h2>
+          <h2 className="text-2xl font-bold text-center">New Service</h2>
           <p className="mt-2 text-center text-sm text-muted-foreground">
-            Deploy a new server or database
+            Launch a new database or server.
           </p>
         </div>
         <RadioGroup className="grid-cols-2" defaultValue="ubuntu">
