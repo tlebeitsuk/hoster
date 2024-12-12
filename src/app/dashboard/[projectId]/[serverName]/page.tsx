@@ -26,7 +26,6 @@ import { Separator } from '@/components/ui/separator'
 import { unstable_noStore as noStore } from 'next/cache'
 import ToggleServerStatus from '@/components/toggle-server-status'
 import { ServerCog } from 'lucide-react'
-import DeleteServerButton from '@/components/delete-server-button'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 interface Server {
@@ -65,10 +64,14 @@ export default async function InstancePage({ params }: PageByIdProps) {
   const memory = server?.state?.memory
   const totalMemory = Math.round((memory?.total / 1000000000) * 10) / 10
   const usedMemory = Math.round((memory?.usage / 1000000000) * 10) / 10
-  const cpu = Math.round((server?.state?.cpu.usage / 1000000000) * 10) / 10
 
   const memoryPercentage = usedMemory / (totalMemory / 100)
-  const MPercent = parseFloat(memoryPercentage.toFixed(1))
+  let MPercent = parseFloat(memoryPercentage.toFixed(1))
+  if (Number.isNaN(MPercent)) {
+    MPercent = 0
+  }
+
+  const cpu = Math.round((server?.state?.cpu.usage / 1000000000) * 10) / 10
 
   const ip = server?.state?.network?.lo?.addresses[0]?.address
 
@@ -117,7 +120,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
                 Memory <span className="text-green-500">[RAM]</span>
               </CardTitle>
               <div className="flex justify-end">
-                <CardDescription>{MPercent}%/100%</CardDescription>
+                <CardDescription>{MPercent}/100%</CardDescription>
               </div>
               <Progress value={MPercent} />
             </CardHeader>
@@ -132,12 +135,11 @@ export default async function InstancePage({ params }: PageByIdProps) {
               <CardTitle>
                 <span className="text-blue-500">[CPU]</span> Usage
               </CardTitle>
+              <div className="flex justify-end">
+                <CardDescription>{cpu}/100%</CardDescription>
+              </div>
+              <Progress value={cpu} />
             </CardHeader>
-            <CardContent>
-              <p>
-                Used capacity: <b className="text-blue-600">{cpu}</b> %
-              </p>
-            </CardContent>
           </Card>
         </div>
 
