@@ -31,7 +31,6 @@ export default function ProjectSettings({ params }) {
   const [newDescription, setNewDescription] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
-  const router = useRouter()
 
   const projects = params.projects
   const projectID = params.projectID
