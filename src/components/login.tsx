@@ -27,7 +27,7 @@ export default function Login() {
       </header>
 
       <main className="flex-1 flex items-center justify-center">
-        <div className="p-8 bg-white dark:bg-gray-800 rounded-lg shadow-2xl w-full max-w-md mx-4">
+        <div className="p-8 bg-white dark:bg-gray-800 sm:rounded-lg shadow-xl w-full max-w-md sm:mx-4">
           <div className="text-center mb-4">
             <h1 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
               Welcome,
@@ -37,7 +37,11 @@ export default function Login() {
             </p>
           </div>
 
-          <Button onClick={handleLogin} size="lg" className="w-full text-white">
+          <Button
+            onClick={handleLogin}
+            size="lg"
+            className="w-full text-white bg-gradient-to-r from-[#7604dd] to-[#6888df] bg-[length:200%_auto] hover:bg-right transition-all duration-300 ease-in-out"
+          >
             <Image
               src="/github.svg"
               alt="GitHub"
@@ -51,9 +55,7 @@ export default function Login() {
       </main>
 
       <footer className="flex items-center justify-between py-4 px-8 border-t">
-        <p className="text-xs text-muted-foreground">
-          &copy; 2024 Hostess. All rights reserved.
-        </p>
+        <p className="text-xs text-muted-foreground">&copy; 2024 Hostess</p>
         <ThemeToggle />
       </footer>
     </div>
