@@ -17,17 +17,37 @@ import {
 } from '@/components/ui/alert-dialog'
 import { Separator } from '@/components/ui/separator'
 import { Textarea } from './ui/textarea'
+import { deleteProject } from '@/data/projects/delete-project'
+import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 
-export default function Component({ params }) {
+export default function ProjectSettings({ params }) {
+  const router = useRouter()
   const [newName, setNewName] = useState('')
   const [newDescription, setNewDescription] = useState('')
+  const [isDeleting, setIsDeleting] = useState(false)
 
-  console.log(params)
   const projects = params.projects
   const projectID = params.projectID
 
   const thisProject = projects.find((p) => p.id === Number(projectID))
-  console.log(thisProject)
+
+  const handleDelete = async () => {
+    if (!thisProject) return
+
+    setIsDeleting(true)
+    try {
+      await deleteProject(thisProject.id)
+      toast.success('Successfully deleted project.')
+      router.push(`/dashboard`)
+      router.refresh()
+    } catch (error) {
+      console.error('Failed to delete server:', error)
+      toast.error('An error occurred while deleting the project.')
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   return (
     <Card className="w-full rounded-none">
@@ -96,7 +116,8 @@ export default function Component({ params }) {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <Button variant="destructive" asChild>
+                <Button variant="destructive" asChild
+                  onClick={handleDelete} disabled={isDeleting}>
                   <AlertDialogAction>Confirm</AlertDialogAction>
                 </Button>
               </AlertDialogFooter>
