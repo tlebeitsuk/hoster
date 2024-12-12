@@ -22,13 +22,12 @@ import {
   renameProject,
 } from '@/data/projects/project-settings'
 import { Textarea } from './ui/textarea'
+import { toast } from 'sonner'
 
 export default function Component({ params }) {
   const [newName, setNewName] = useState('')
   const [newDescription, setNewDescription] = useState('')
   const [isSaving, setIsSaving] = useState(false)
-  const [errorMessage, setErrorMessage] = useState('')
-  const [successMessage, setSuccessMessage] = useState('')
   const router = useRouter()
 
   const projects = params.projects
@@ -39,38 +38,36 @@ export default function Component({ params }) {
 
   const handleClick = async () => {
     if (!newName.trim() && !newDescription.trim()) {
-      setErrorMessage('There are no changes to be saved.')
+      toast.error('There are no changes to be saved.')
       return
     }
 
     setIsSaving(true)
-    setErrorMessage('')
-    setSuccessMessage('')
 
     try {
       if (newName.trim() && newDescription.trim()) {
-        const changedName = await renameProject(Number(projectID), newName)
-        const changedDescription = await changeProjectDescription(
+        await renameProject(Number(projectID), newName)
+        await changeProjectDescription(
           Number(projectID),
           newDescription
         )
-        setSuccessMessage('Updated successfully!')
+        toast.success("Updated project successfully!")
       } else if (newName.trim()) {
-        const changes = await renameProject(Number(projectID), newName)
-        setSuccessMessage('Updated project!')
+        await renameProject(Number(projectID), newName)
+        toast.success('Updated project name successfully!')
       } else if (newDescription.trim()) {
-        const changes = await changeProjectDescription(
+        await changeProjectDescription(
           Number(projectID),
           newDescription
         )
-        setSuccessMessage('Updated successfully!')
+        toast.success("Updated project description successfully!")
       }
 
       setNewName('')
       setNewDescription('')
       router.refresh()
     } catch (error: any) {
-      setErrorMessage(error.message || 'Failed to save changes.')
+      toast.error(error.message || 'Failed to save changes.')
     } finally {
       setIsSaving(false)
     }
@@ -118,9 +115,6 @@ export default function Component({ params }) {
               className="w-full"
             />
           </div>
-          {successMessage && (
-            <p className="text-green-500 text-sm mt-2">{successMessage}</p>
-          )}
           <Button
             onClick={handleClick}
             disabled={isSaving}
@@ -130,9 +124,6 @@ export default function Component({ params }) {
             {isSaving ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
-        {errorMessage && (
-          <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
-        )}
         <Separator />
         <div>
           <h3 className="text-lg font-semibold mb-2">Remove Project</h3>
