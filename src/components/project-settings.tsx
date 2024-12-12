@@ -26,7 +26,6 @@ import { deleteProject } from '@/data/projects/delete-project'
 import { toast } from 'sonner'
 
 export default function ProjectSettings({ params }) {
-  const router = useRouter()
   const [newName, setNewName] = useState('')
   const [newDescription, setNewDescription] = useState('')
   const [isDeleting, setIsDeleting] = useState(false)
