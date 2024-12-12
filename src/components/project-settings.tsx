@@ -22,20 +22,38 @@ import {
   renameProject,
 } from '@/data/projects/project-settings'
 import { Textarea } from './ui/textarea'
+import { deleteProject } from '@/data/projects/delete-project'
+import { toast } from 'sonner'
 
-export default function Component({ params }) {
+export default function ProjectSettings({ params }) {
+  const router = useRouter()
   const [newName, setNewName] = useState('')
   const [newDescription, setNewDescription] = useState('')
+  const [isDeleting, setIsDeleting] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const [successMessage, setSuccessMessage] = useState('')
-  const router = useRouter()
 
   const projects = params.projects
   const projectID = params.projectID
   const thisProject = projects.find((p) => p.id === Number(projectID))
 
-  console.log(thisProject)
+  const handleDelete = async () => {
+    if (!thisProject) return
+
+    setIsDeleting(true)
+    try {
+      await deleteProject(thisProject.id)
+      toast.success('Successfully deleted project.')
+      router.push(`/dashboard`)
+      router.refresh()
+    } catch (error) {
+      console.error('Failed to delete server:', error)
+      toast.error('An error occurred while deleting the project.')
+    } finally {
+      setIsDeleting(false)
+    }
+  }
 
   const handleClick = async () => {
     if (!newName.trim() && !newDescription.trim()) {
@@ -155,7 +173,8 @@ export default function Component({ params }) {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <Button variant="destructive" asChild>
+                <Button variant="destructive" asChild
+                  onClick={handleDelete} disabled={isDeleting}>
                   <AlertDialogAction>Confirm</AlertDialogAction>
                 </Button>
               </AlertDialogFooter>
