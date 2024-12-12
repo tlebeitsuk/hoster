@@ -26,7 +26,6 @@ import { Separator } from '@/components/ui/separator'
 import { unstable_noStore as noStore } from 'next/cache'
 import ToggleServerStatus from '@/components/toggle-server-status'
 import { ServerCog } from 'lucide-react'
-import DeleteServerButton from '@/components/delete-server-button'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 interface Server {
@@ -67,7 +66,10 @@ export default async function InstancePage({ params }: PageByIdProps) {
   const usedMemory = Math.round((memory?.usage / 1000000000) * 10) / 10
 
   const memoryPercentage = usedMemory / (totalMemory / 100)
-  const MPercent = parseFloat(memoryPercentage.toFixed(1))
+  let MPercent = parseFloat(memoryPercentage.toFixed(1))
+  if (Number.isNaN(MPercent)) {
+    MPercent = 0
+  }
 
   const cpu = Math.round((server?.state?.cpu.usage / 1000000000) * 10) / 10
 
@@ -138,10 +140,6 @@ export default async function InstancePage({ params }: PageByIdProps) {
               </div>
               <Progress value={cpu} />
             </CardHeader>
-            {/* <CardContent>
-              <p>Total capacity: {totalMemory} GB</p>
-              <p>Current usage: {usedMemory} GB</p>
-            </CardContent> */}
           </Card>
         </div>
 
