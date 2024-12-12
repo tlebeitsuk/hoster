@@ -25,6 +25,9 @@ export const getProjects = async (projectId?: number) => {
         where: {
           userId: userId
         },
+        orderBy: {
+          createdAt: 'asc'
+        }
       });
 
     return projects;

@@ -26,8 +26,9 @@ import { Separator } from '@/components/ui/separator'
 import { unstable_noStore as noStore } from 'next/cache'
 import ToggleServerStatus from '@/components/toggle-server-status'
 import { ServerCog } from 'lucide-react'
-import DeleteServerButton from "@/components/delete-server-button";
-
+import DeleteServerButton from '@/components/delete-server-button'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 interface Server {
   id: string
   status: 'Running' | 'Stopped'
@@ -86,18 +87,25 @@ export default async function InstancePage({ params }: PageByIdProps) {
   return (
     <>
       <div className="flex flex-wrap m-5 flex-col gap-5">
-        <div className="flex gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <ServerCog className={statusClass} />
-              </TooltipTrigger>
-              <TooltipContent>
-                <p>Server is {server.status}.</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <h1 className="font-medium text-xl">{serverName}</h1>
+        <div className="flex items-center justify-between w-full">
+          <div className="flex gap-2">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger>
+                  <ServerCog className={statusClass} />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Server is {server.status}.</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <h1 className="font-medium text-xl">{serverName}</h1>
+          </div>
+          <Button size="sm" variant="outline" asChild>
+            <Link href={`/dashboard/${projectId}/${serverName}/settings`}>
+              Settings
+            </Link>
+          </Button>
         </div>
 
         <Separator />
@@ -159,15 +167,6 @@ export default async function InstancePage({ params }: PageByIdProps) {
               <TableCell>
                 {new Date(server.last_used_at).getTime() ? usedAtResult : ''}
               </TableCell>
-                <TableCell>
-                <DeleteServerButton 
-                  server={{
-                    name: server.name,
-                    projectId,
-                    status: server.status,
-                  }}
-                />
-                </TableCell>
             </TableRow>
           </TableBody>
         </Table>

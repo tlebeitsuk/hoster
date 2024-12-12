@@ -5,15 +5,7 @@ import { useState } from 'react'
 import { Button } from './ui/button'
 import { deleteServer } from '@/data/projects/delete-server'
 import {
-  AlertDialog,
   AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { toast } from 'sonner'
 
@@ -50,34 +42,16 @@ export default function DeleteServerButton({ server }: DeleteServerProps) {
   }
 
   return (
-    <AlertDialog>
-      <AlertDialogTrigger>
-        <Button variant="destructive">Delete Server</Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action cannot be undone. This will permanently delete this
-            server and remove it from our servers.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button
-            onClick={handleDeleteServer}
-            className={`${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
-            disabled={serverStatusIsRunning() || isDeleting}
-            variant="destructive"
-            title={isDeleting ? 'Deleting...' : 'Click to delete server'}
-            asChild
-          >
-            <AlertDialogAction>
-              {isDeleting ? 'Deleting...' : 'Delete'}
-            </AlertDialogAction>
-          </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Button
+      onClick={handleDeleteServer}
+      className={`${isDeleting ? 'opacity-50 cursor-not-allowed' : ''}`}
+      disabled={serverStatusIsRunning() || isDeleting}
+      variant="destructive"
+      title={isDeleting ? 'Deleting...' : 'Click to delete server'}
+      asChild>
+      <AlertDialogAction>
+        {isDeleting ? 'Deleting...' : 'Delete'}
+      </AlertDialogAction>
+    </Button>
   )
 }
