@@ -19,6 +19,7 @@ import {
   CardTitle,
   CardDescription,
 } from '@/components/ui/card'
+import { revalidatePath } from 'next/cache'
 
 interface Server {
   id: string
@@ -45,7 +46,9 @@ export default async function ProjectPage({
   noStore()
   const projectId = (await params).projectId
   const servers = await getServers(projectId)
-  const project = (await getProjects(Number(projectId))) as Project | null
+  const project = (await getProjects(Number(projectId))) as Project | null  
+  
+  await revalidatePath(`/dashboard/${project!.id}`)
 
   return (
     <>
