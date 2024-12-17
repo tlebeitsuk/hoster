@@ -14,3 +14,7 @@ export const toggleServer = async (projectId: string, serverName: string, action
     throw new Error('Unable to change server state');
   }
 };
+
+export const revalidatePage = async (path: string) => {
+  revalidatePath(path);
+};
