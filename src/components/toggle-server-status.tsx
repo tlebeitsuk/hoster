@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { toggleServer } from '@/data/projects/toggle-server';
+import { revalidatePage } from '@/data/projects/toggle-server';
 
 type ToggleServerProps = {
   server: {
@@ -12,10 +13,7 @@ type ToggleServerProps = {
   statusClass: string;
 };
 
-export default function ToggleServerStatus({
-  server,
-  statusClass,
-}: ToggleServerProps) {
+export default function ToggleServerStatus({ server }: ToggleServerProps) {
   const [serverStatus, setServerStatus] = useState(server.status);
 
   const handleToggleServer = async () => {
@@ -24,11 +22,14 @@ export default function ToggleServerStatus({
       await toggleServer(server.projectId, server.name, action);
 
       setServerStatus(action === 'start' ? 'Running' : 'Stopped');
+      await revalidatePage(`/dashboard/${server.projectId}/${server.name}`);
     } catch (error) {
       console.error('Failed to toggle server state:', error);
       alert('An error occurred while changing the server state.');
     }
   };
+
+  const statusClass = serverStatus === 'Running' ? 'text-green-500' : 'text-red-500';
 
   return (
     <p
