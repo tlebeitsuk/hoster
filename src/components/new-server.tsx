@@ -12,7 +12,17 @@ import { Database, Globe, Server } from 'lucide-react'
 export default function NewServer({ projectId }: { projectId: string }) {
   const router = useRouter()
   const [name, setName] = useState('')
+  const [password, setPassword] = useState('')
+  const [selectedType, setSelectedType] = useState('server')
   const [isLoading, setIsLoading] = useState(false)
+
+  const generateRandomPassword = () => {
+    const chars =
+      'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*'
+    return Array.from({ length: 12 }, () =>
+      chars.charAt(Math.floor(Math.random() * chars.length))
+    ).join('')
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -41,7 +51,7 @@ export default function NewServer({ projectId }: { projectId: string }) {
   }
 
   const serverOptions = [
-    { id: 'ubuntu', label: 'Ubuntu', icon: Server },
+    { id: 'server', label: 'Server', icon: Server },
     { id: 'wordpress', label: 'Wordpress', icon: Globe },
     { id: 'postgresql', label: 'PostgreSQL', icon: Database },
     { id: 'mysql', label: 'MySQL', icon: Database },
@@ -56,7 +66,18 @@ export default function NewServer({ projectId }: { projectId: string }) {
             Launch a new database or server.
           </p>
         </div>
-        <RadioGroup className="grid-cols-2" defaultValue="ubuntu">
+        <RadioGroup
+          className="grid-cols-2"
+          defaultValue="server"
+          onValueChange={(value) => {
+            setSelectedType(value)
+            if (value === 'postgresql' || value === 'mysql') {
+              setPassword(generateRandomPassword())
+            } else {
+              setPassword('')
+            }
+          }}
+        >
           {serverOptions.map(({ id, label, icon: Icon }) => (
             <label
               key={id}
@@ -81,7 +102,7 @@ export default function NewServer({ projectId }: { projectId: string }) {
               className="absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground"
             >
               <span className="inline-flex bg-background px-2">
-                Server Name
+                Service Name
               </span>
             </label>
             <Input
@@ -93,9 +114,40 @@ export default function NewServer({ projectId }: { projectId: string }) {
               onChange={(e) => setName(e.target.value)}
             />
           </div>
+          {(selectedType === 'postgresql' || selectedType === 'mysql') && (
+            <div className="group relative">
+              <label
+                htmlFor="password"
+                className="absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground group-has-[input:not(:placeholder-shown)]:pointer-events-none group-has-[input:not(:placeholder-shown)]:top-0 group-has-[input:not(:placeholder-shown)]:cursor-default group-has-[input:not(:placeholder-shown)]:text-xs group-has-[input:not(:placeholder-shown)]:font-medium group-has-[input:not(:placeholder-shown)]:text-foreground z-10"
+              >
+                <span className="inline-flex bg-background px-2">Password</span>
+              </label>
+              <div className="flex gap-2 relative">
+                <Input
+                  id="password"
+                  type="text"
+                  placeholder=""
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setPassword(generateRandomPassword())}
+                >
+                  Regenerate
+                </Button>
+              </div>
+            </div>
+          )}
 
-          <Button type="submit" className="w-full" disabled={isLoading}>
-            {isLoading ? 'Creating...' : 'Create Server'}
+          <Button
+            type="submit"
+            className="w-full text-white"
+            disabled={isLoading}
+          >
+            {isLoading ? 'Creating...' : 'Create Service'}
           </Button>
         </form>
       </div>
