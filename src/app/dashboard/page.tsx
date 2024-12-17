@@ -1,14 +1,8 @@
-import { auth } from '@/lib/auth'
-import { headers } from 'next/headers'
+import Dashboard from '@/components/dashboard'
+import { getProjects } from '@/data/projects/get-projects'
 
 export default async function DashboardPage() {
-	const session = await auth.api.getSession({
-		headers: headers(),
-	})
+  const projects = await getProjects()
 
-	return (
-		<div className="p-4">
-			<p>Welcome, {session?.user?.name}</p>
-		</div>
-	)
+  return <Dashboard projects={projects as Project[]} />
 }
