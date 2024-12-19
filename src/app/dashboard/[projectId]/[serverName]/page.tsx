@@ -1,4 +1,4 @@
-import { getServers } from "@/data/projects/get-servers"
+import { getServers } from '@/data/projects/get-servers'
 import {
   Table,
   TableBody,
@@ -6,60 +6,37 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "@/components/ui/table"
+} from '@/components/ui/table'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
-} from "@/components/ui/tooltip"
+} from '@/components/ui/tooltip'
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Progress } from "@/components/ui/progress"
-import { formatDistanceToNow } from "date-fns"
-import { Separator } from "@/components/ui/separator"
-import { unstable_noStore as noStore } from "next/cache"
-import ToggleServerStatus from "@/components/toggle-server-status"
-import { ServerCog } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
-interface Server {
-  id: string
-  status: "Running" | "Stopped"
-  created_at: Date
-  last_used_at: Date
-  name: string
-  state?: {
-    memory: {
-      total: number
-      usage: number
-    }
-    cpu: {
-      usage: number
-    }
-  }
-}
+} from '@/components/ui/card'
+import { Progress } from '@/components/ui/progress'
+import { formatDistanceToNow } from 'date-fns'
+import { Separator } from '@/components/ui/separator'
+import { unstable_noStore as noStore } from 'next/cache'
+import ToggleServerStatus from '@/components/toggle-server-status'
+import { ServerCog } from 'lucide-react'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
-type PageByIdProps = {
-  params: {
-    projectId: string
-    serverName: string
-  }
-}
-
-export default async function InstancePage({ params }: PageByIdProps) {
+export default async function InstancePage({ params }: PageById) {
   noStore()
   const { projectId, serverName } = params
   const servers = await getServers(projectId)
   const server = servers.find((s: Server) => s.name === serverName)
 
   const statusClass =
-    server?.status === "Running" ? "text-green-500" : "text-red-500"
+    server?.status === 'Running' ? 'text-green-500' : 'text-red-500'
 
   const memory = server?.state?.memory
   const totalMemory = Math.round((memory?.total / 1000000000) * 10) / 10
@@ -167,7 +144,7 @@ export default async function InstancePage({ params }: PageByIdProps) {
               <TableCell>{ip}</TableCell>
               <TableCell>{createdAtResult}</TableCell>
               <TableCell>
-                {new Date(server.last_used_at).getTime() ? usedAtResult : ""}
+                {new Date(server.last_used_at).getTime() ? usedAtResult : ''}
               </TableCell>
             </TableRow>
           </TableBody>

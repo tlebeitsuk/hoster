@@ -17,9 +17,13 @@ import {
 import { Separator } from '@/components/ui/separator'
 import DeleteServerButton from './delete-server-button'
 
-export default function ServerSettings({ params }: { params: { serverName: string, projectId: string } }) {
+export default function ServerSettings({
+  params,
+}: {
+  params: { serverName: string; projectId: string }
+}) {
   const [newServerName, setNewServerName] = useState('')
-  const { projectId, serverName } = params  
+  const { projectId, serverName } = params
 
   return (
     <Card className="w-full rounded-none">
@@ -76,12 +80,15 @@ export default function ServerSettings({ params }: { params: { serverName: strin
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  {<DeleteServerButton
-                  server={{
-                    name: serverName,
-                    projectId,
-                  }}
-                /> }
+                {
+                  <DeleteServerButton
+                    server={{
+                      name: serverName,
+                      status: 'Stopped',
+                      projectId,
+                    }}
+                  />
+                }
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>

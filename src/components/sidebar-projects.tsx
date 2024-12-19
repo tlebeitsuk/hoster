@@ -10,14 +10,7 @@ import {
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
 
-export default function Projects({
-  projects,
-}: {
-  projects: {
-    title: string
-    id: number
-  }[]
-}) {
+export default function Projects({ projects }: { projects: Project[] }) {
   const params = useParams<{ projectId: string }>()
 
   return (
