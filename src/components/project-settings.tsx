@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useState, useTransition } from 'react'
 import { Save, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -25,68 +25,67 @@ import { Textarea } from './ui/textarea'
 import { deleteProject } from '@/data/projects/delete-project'
 import { toast } from 'sonner'
 
-export default function ProjectSettings({ params }) {
+export default function ProjectSettings({
+  projects,
+  projectID,
+  servers,
+}: {
+  projects: Project
+  projectID: string
+  servers?: Server[]
+}) {
   const [newName, setNewName] = useState('')
   const [newDescription, setNewDescription] = useState('')
-  const [isDeleting, setIsDeleting] = useState(false)
-  const [isSaving, setIsSaving] = useState(false)
+  const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
-  const projects = params.projects
-  const projectID = params.projectID
-  const thisProject = projects.find((p) => p.id === Number(projectID))
+  useEffect(() => {
+    if (projects) {
+      setNewName(projects.title ?? '')
+      setNewDescription(projects.description ?? '')
+    }
+  }, [projects])
+
+  if (!projects) {
+    return <div className="p-4">Project not found</div>
+  }
 
   const handleDelete = async () => {
-    if (!thisProject) return
+    startTransition(async () => {
+      try {
+        if (servers && servers.length > 0) {
+          toast.error('Cannot delete project. Please delete all servers first.')
+          return
+        }
 
-    setIsDeleting(true)
-    try {
-      await deleteProject(thisProject.id)
-      toast.success('Successfully deleted project.')
-      router.push(`/dashboard`)
-      router.refresh()
-    } catch (error) {
-      console.error('Failed to delete server:', error)
-      toast.error('An error occurred while deleting the project.')
-    } finally {
-      setIsDeleting(false)
-    }
+        await deleteProject(projects.id)
+        toast.success('Successfully deleted project.')
+        router.push('/dashboard')
+        router.refresh()
+      } catch (error) {
+        console.error('Failed to delete project:', error)
+        toast.error('An error occurred while deleting the project.')
+      }
+    })
   }
 
   const handleClick = async () => {
-    if (!newName.trim() && !newDescription.trim()) {
-      toast.error('There are no changes to be saved.')
+    if (!newName && !newDescription) {
+      toast.error('Insert a name or description to save changes.')
       return
     }
 
-    setIsSaving(true)
-
-    try {
-      if (newName.trim() && newDescription.trim()) {
+    startTransition(async () => {
+      try {
         await renameProject(Number(projectID), newName)
-        await changeProjectDescription(
-          Number(projectID),
-          newDescription
-        )
-        toast.success("Updated project successfully!")
-      } else if (newName.trim()) {
-        await renameProject(Number(projectID), newName)
-        toast.success('Updated project name successfully!')
-      } else if (newDescription.trim()) {
-        await changeProjectDescription(
-          Number(projectID),
-          newDescription
-        )
-        toast.success("Updated project description successfully!")
+        await changeProjectDescription(Number(projectID), newDescription)
+        toast.success('Updated project successfully!')
+        router.refresh()
+      } catch (error) {
+        console.error('Error saving changes:', error)
+        toast.error('Failed to save changes.')
       }
-
-      setNewName('')
-      setNewDescription('')
-      router.refresh()
-    } catch (error: any) {
-      toast.error(error.message || 'Failed to save changes.')
-    } finally {
-      setIsSaving(false)
-    }
+    })
   }
 
   return (
@@ -99,7 +98,7 @@ export default function ProjectSettings({ params }) {
           <div className="group relative flex-grow">
             <label
               htmlFor="projectName"
-              className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground"
+              className="absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground"
             >
               <span className="inline-flex bg-background px-2">
                 Project Name
@@ -117,7 +116,7 @@ export default function ProjectSettings({ params }) {
           <div className="group relative flex-grow">
             <label
               htmlFor="projectDescription"
-              className="origin-start absolute top-1/2 block -translate-y-1/2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:top-0 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+input:not(:placeholder-shown)]:pointer-events-none has-[+input:not(:placeholder-shown)]:top-0 has-[+input:not(:placeholder-shown)]:cursor-default has-[+input:not(:placeholder-shown)]:text-xs has-[+input:not(:placeholder-shown)]:font-medium has-[+input:not(:placeholder-shown)]:text-foreground"
+              className="absolute top-0 block translate-y-2 cursor-text px-1 text-sm text-muted-foreground/70 transition-all group-focus-within:pointer-events-none group-focus-within:-translate-y-1/2 group-focus-within:cursor-default group-focus-within:text-xs group-focus-within:font-medium group-focus-within:text-foreground has-[+textarea:not(:placeholder-shown)]:pointer-events-none has-[+textarea:not(:placeholder-shown)]:-translate-y-1/2 has-[+textarea:not(:placeholder-shown)]:cursor-default has-[+textarea:not(:placeholder-shown)]:text-xs has-[+textarea:not(:placeholder-shown)]:font-medium has-[+textarea:not(:placeholder-shown)]:text-foreground"
             >
               <span className="inline-flex bg-background px-2">
                 Description
@@ -133,11 +132,11 @@ export default function ProjectSettings({ params }) {
           </div>
           <Button
             onClick={handleClick}
-            disabled={isSaving}
-            className="self-start"
+            disabled={isPending}
+            className="self-start text-white"
           >
             <Save className="mr-2 size-4" />
-            {isSaving ? 'Saving...' : 'Save Changes'}
+            {isPending ? 'Saving...' : 'Save Changes'}
           </Button>
         </div>
         <Separator />
@@ -145,9 +144,9 @@ export default function ProjectSettings({ params }) {
           <h3 className="text-lg font-semibold mb-2">Remove Project</h3>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button variant="destructive">
+              <Button variant="destructive" disabled={isPending}>
                 <Trash2 className="mr-2 size-4" />
-                Permanently Delete
+                {isPending ? 'Deleting...' : 'Permanently Delete'}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
@@ -162,8 +161,7 @@ export default function ProjectSettings({ params }) {
               </AlertDialogHeader>
               <AlertDialogFooter>
                 <AlertDialogCancel>Cancel</AlertDialogCancel>
-                <Button variant="destructive" asChild
-                  onClick={handleDelete} disabled={isDeleting}>
+                <Button variant="destructive" onClick={handleDelete} asChild>
                   <AlertDialogAction>Confirm</AlertDialogAction>
                 </Button>
               </AlertDialogFooter>
