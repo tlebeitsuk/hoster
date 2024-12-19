@@ -1,5 +1,5 @@
-import { ofetch } from "ofetch";
-import { Agent } from "undici";
+import { ofetch } from "ofetch"
+import { Agent } from "undici"
 
 const secureAgent = new Agent({
   connect: {
@@ -7,7 +7,7 @@ const secureAgent = new Agent({
     key: process.env.INCUS_KEY,
     cert: process.env.INCUS_CERT,
   },
-});
+})
 
 export const callIncus = ofetch.create({
   baseURL: `${process.env.INCUS_URL}/1.0`,
@@ -18,8 +18,7 @@ export const callIncus = ofetch.create({
   },
 
   parseResponse: async (response) => {
-    //console.log(response);
-    const data = JSON.parse(response);
-    return data.metadata;
+    const data = JSON.parse(response)
+    return data.metadata
   },
-});
+})
