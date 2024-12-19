@@ -1,4 +1,4 @@
-Utbilningsmaterial för [programutvecklare på Optima](https://optimaedu.fi/sv/studier/programutvecklare/)
+Utbildningsmaterial för [programutvecklare på Optima](https://optimaedu.fi/sv/studier/programutvecklare/)
 
 ---
 
