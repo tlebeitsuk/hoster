@@ -5,25 +5,25 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '@/components/ui/table'
-import Link from 'next/link'
-import { getServers } from '@/data/projects/get-servers'
-import { formatDistanceToNow } from 'date-fns'
-import { Button } from '@/components/ui/button'
-import { Separator } from '@/components/ui/separator'
-import { unstable_noStore as noStore } from 'next/cache'
-import { getProjects } from '@/data/projects/get-projects'
+} from "@/components/ui/table"
+import Link from "next/link"
+import { getServers } from "@/data/projects/get-servers"
+import { formatDistanceToNow } from "date-fns"
+import { Button } from "@/components/ui/button"
+import { Separator } from "@/components/ui/separator"
+import { unstable_noStore as noStore } from "next/cache"
+import { getProjects } from "@/data/projects/get-projects"
 import {
   Card,
   CardHeader,
   CardTitle,
   CardDescription,
-} from '@/components/ui/card'
-import { revalidatePath } from 'next/cache'
+} from "@/components/ui/card"
+import { revalidatePath } from "next/cache"
 
 interface Server {
   id: string
-  status: 'Running' | 'Stopped'
+  status: "Running" | "Stopped"
   created_at: Date
   last_used_at: Date
   name: string
@@ -46,9 +46,9 @@ export default async function ProjectPage({
   noStore()
   const projectId = (await params).projectId
   const servers = await getServers(projectId)
-  const project = (await getProjects(Number(projectId))) as Project | null  
-  
-  await revalidatePath(`/dashboard/${project!.id}`)
+  const project = (await getProjects(Number(projectId))) as Project | null
+
+  await revalidatePath(`/dashboard/${project?.id}`)
 
   return (
     <>
@@ -86,22 +86,22 @@ export default async function ProjectPage({
               <TableBody className="w-full">
                 {servers.map((server: Server) => {
                   const statusClass =
-                    server.status === 'Running'
-                      ? 'text-green-500'
-                      : 'text-red-500'
+                    server.status === "Running"
+                      ? "text-green-500"
+                      : "text-red-500"
 
                   const createdAtResult = formatDistanceToNow(
                     server.created_at,
                     {
                       addSuffix: true,
-                    }
+                    },
                   )
 
                   const usedAtResult = formatDistanceToNow(
                     server.last_used_at,
                     {
                       addSuffix: true,
-                    }
+                    },
                   )
 
                   return (
@@ -121,7 +121,7 @@ export default async function ProjectPage({
                         <TableCell className="w-[25%]">
                           {new Date(server.last_used_at).getTime()
                             ? usedAtResult
-                            : ''}
+                            : ""}
                         </TableCell>
                       </TableRow>
                     </Link>

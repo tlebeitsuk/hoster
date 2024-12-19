@@ -14,6 +14,18 @@ export async function deleteProject(id: number) {
       throw new Error("User not authorized")
     }
 
+    // Check if the user has access to the project
+    const project = await prisma.project.findUnique({
+      where: {
+        id: Number(id),
+        userId: session.user.id,
+      },
+    })
+
+    if (!project) {
+      throw new Error("Project not found")
+    }
+
     // 1. Delete project from Incus
     await callIncus("/projects/" + id, {
       method: "DELETE",
