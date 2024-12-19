@@ -4,20 +4,10 @@ import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from './ui/button'
 import { deleteServer } from '@/data/projects/delete-server'
-import {
-  AlertDialogAction,
-} from '@/components/ui/alert-dialog'
+import { AlertDialogAction } from '@/components/ui/alert-dialog'
 import { toast } from 'sonner'
 
-type DeleteServerProps = {
-  server: {
-    name: string
-    projectId: string
-    status: string
-  }
-}
-
-export default function DeleteServerButton({ server }: DeleteServerProps) {
+export default function DeleteServerButton({ server }: DeleteServer) {
   const router = useRouter()
   const [isDeleting, setIsDeleting] = useState(false)
 
@@ -48,7 +38,8 @@ export default function DeleteServerButton({ server }: DeleteServerProps) {
       disabled={serverStatusIsRunning() || isDeleting}
       variant="destructive"
       title={isDeleting ? 'Deleting...' : 'Click to delete server'}
-      asChild>
+      asChild
+    >
       <AlertDialogAction>
         {isDeleting ? 'Deleting...' : 'Delete'}
       </AlertDialogAction>

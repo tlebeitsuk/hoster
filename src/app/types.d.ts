@@ -15,3 +15,27 @@ type Server = {
     state?: ServerState
     projectId: string
 }
+
+type ToggleServer = {
+    server: {
+        name: string;
+        status: string;
+        projectId: string;
+    };
+    statusClass: string;
+};
+
+type DeleteServer = {
+    server: {
+        name: string
+        projectId: string
+        status: string
+    }
+}
+
+type PageById = {
+    params: {
+        projectId: string
+        serverName: string
+    }
+}

@@ -1,6 +1,6 @@
 'use client'
 import { useEffect, useState, useTransition } from 'react'
-import { Save, Trash2 } from 'lucide-react'
+import { Loader2, Save, Trash2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -135,8 +135,12 @@ export default function ProjectSettings({
             disabled={isPending}
             className="self-start text-white"
           >
-            <Save className="mr-2 size-4" />
-            {isPending ? 'Saving...' : 'Save Changes'}
+            {isPending ? (
+              <Loader2 className="mr-1 size-4 animate-spin" />
+            ) : (
+              <Save className="mr-1 size-4" />
+            )}
+            Save Changes
           </Button>
         </div>
         <Separator />
@@ -145,8 +149,12 @@ export default function ProjectSettings({
           <AlertDialog>
             <AlertDialogTrigger asChild>
               <Button variant="destructive" disabled={isPending}>
-                <Trash2 className="mr-2 size-4" />
-                {isPending ? 'Deleting...' : 'Permanently Delete'}
+                {isPending ? (
+                  <Loader2 className="mr-1 size-4 animate-spin" />
+                ) : (
+                  <Trash2 className="mr-1 size-4" />
+                )}
+                Permanently Delete
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>

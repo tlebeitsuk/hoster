@@ -21,23 +21,6 @@ import {
 } from '@/components/ui/card'
 import { revalidatePath } from 'next/cache'
 
-interface Server {
-  id: string
-  status: 'Running' | 'Stopped'
-  created_at: Date
-  last_used_at: Date
-  name: string
-}
-
-interface Project {
-  id: number
-  title: string
-  description: string
-  userId: string
-  createdAt: Date
-  updatedAt: Date
-}
-
 export default async function ProjectPage({
   params,
 }: {
@@ -46,8 +29,8 @@ export default async function ProjectPage({
   noStore()
   const projectId = (await params).projectId
   const servers = await getServers(projectId)
-  const project = (await getProjects(Number(projectId))) as Project | null  
-  
+  const project = (await getProjects(Number(projectId))) as Project | null
+
   await revalidatePath(`/dashboard/${project!.id}`)
 
   return (
